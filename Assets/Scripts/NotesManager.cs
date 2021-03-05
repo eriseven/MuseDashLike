@@ -16,6 +16,13 @@ public class NotesManager : MonoBehaviour
     [SerializeField]
     Transform trackRoot;
 
+    [SerializeField]
+    Transform leftTrack;
+
+    [SerializeField]
+    Transform rightTrack;
+
+
     public enum InputEvent
     {
         PRESSED,
@@ -170,10 +177,22 @@ public class NotesManager : MonoBehaviour
         foreach (var m in leftNotes)
         {
             MuseNoteMarker n = m as MuseNoteMarker;
-            var note = GameObject.Instantiate(clickNotePrefab, trackRoot);
+            var note = GameObject.Instantiate(clickNotePrefab, this.leftTrack);
             note.transform.localPosition = Vector3.right * (float)n.time * unitPerSecond;
             this.tracks[0].AddNote(new Note() { noteObject = note, time = (float)n.time, id = n.guid });
         }
+
+        var rightTrack = tracks[1];
+        var rightNotes = rightTrack.GetMarkers();
+
+        foreach (var m in rightNotes)
+        {
+            MuseNoteMarker n = m as MuseNoteMarker;
+            var note = GameObject.Instantiate(clickNotePrefab, this.rightTrack);
+            note.transform.localPosition = Vector3.right * (float)n.time * unitPerSecond;
+            this.tracks[1].AddNote(new Note() { noteObject = note, time = (float)n.time, id = n.guid });
+        }
+
     }
 
     Vector3 trackOffset = Vector3.zero;

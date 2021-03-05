@@ -65,6 +65,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Time: 40.58333333333333
   guid: 75cc1e40-7913-4137-a9bc-96ee76500d94
+--- !u!114 &-5225097956874958930
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8988aeedf2779d34bb93467f3c18ccd8, type: 3}
+  m_Name: Muse Click Note
+  m_EditorClassIdentifier: 
+  m_Time: 67.71666666666667
+  guid: 445195a9-f66d-46d4-a6bc-342731072a4e
 --- !u!114 &-4346573433941069965
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -230,6 +244,34 @@ MonoBehaviour:
     m_Framerate: 60
   m_DurationMode: 0
   m_MarkerTrack: {fileID: -7221764890559925057}
+--- !u!114 &2563106618675639057
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8988aeedf2779d34bb93467f3c18ccd8, type: 3}
+  m_Name: Muse Click Note
+  m_EditorClassIdentifier: 
+  m_Time: 83.15
+  guid: 048381e7-0018-4d37-8450-264ec37bec4c
+--- !u!114 &2832266045775985323
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8988aeedf2779d34bb93467f3c18ccd8, type: 3}
+  m_Name: Muse Click Note
+  m_EditorClassIdentifier: 
+  m_Time: 71.61666666666666
+  guid: 184176e5-1195-4644-9f24-5864b833475e
 --- !u!114 &3124780687560276437
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -263,6 +305,8 @@ MonoBehaviour:
     - {fileID: -2093769718672287813}
     - {fileID: -67671276663537406}
     - {fileID: 9215924546935188460}
+    - {fileID: 2832266045775985323}
+    - {fileID: -5225097956874958930}
 --- !u!114 &3328108588268480523
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -320,6 +364,7 @@ MonoBehaviour:
     - {fileID: -3147687448423838370}
     - {fileID: 4553006208485292417}
     - {fileID: -8295257404408865376}
+    - {fileID: 2563106618675639057}
 --- !u!114 &4782919938318321436
 MonoBehaviour:
   m_ObjectHideFlags: 1
