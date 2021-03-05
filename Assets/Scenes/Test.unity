@@ -313,10 +313,6 @@ PlayableDirector:
   m_SceneBindings:
   - key: {fileID: 4782919938318321436, guid: cceccf2d28a4c4044bf3fa9fe8443b61, type: 2}
     value: {fileID: 1248791292}
-  - key: {fileID: 3124780687560276437, guid: cceccf2d28a4c4044bf3fa9fe8443b61, type: 2}
-    value: {fileID: 0}
-  - key: {fileID: 4672219440422311670, guid: cceccf2d28a4c4044bf3fa9fe8443b61, type: 2}
-    value: {fileID: 0}
   m_ExposedReferences:
     m_References: []
 --- !u!1 &332521314

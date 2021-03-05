@@ -4,7 +4,7 @@ using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
 [Serializable]
-public class MuseNoteTrackClip : PlayableAsset, ITimelineClipAsset
+public abstract class MuseNoteTrackClip : PlayableAsset, ITimelineClipAsset
 {
     public MuseNoteTrackBehaviour template = new MuseNoteTrackBehaviour ();
 
@@ -13,12 +13,12 @@ public class MuseNoteTrackClip : PlayableAsset, ITimelineClipAsset
         get { return ClipCaps.None; }
     }
 
-    public override double duration => 0.1;
+    //public override double duration => 0.1;
 
-    public override Playable CreatePlayable (PlayableGraph graph, GameObject owner)
+    public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
     {
-        var playable = ScriptPlayable<MuseNoteTrackBehaviour>.Create (graph, template);
-        MuseNoteTrackBehaviour clone = playable.GetBehaviour ();
+        var playable = ScriptPlayable<MuseNoteTrackBehaviour>.Create(graph, template);
+        MuseNoteTrackBehaviour clone = playable.GetBehaviour();
         return playable;
     }
 }

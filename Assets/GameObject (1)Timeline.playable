@@ -1,5 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9095498415044105800
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8988aeedf2779d34bb93467f3c18ccd8, type: 3}
+  m_Name: Muse Click Note
+  m_EditorClassIdentifier: 
+  m_Time: 56.03333333333331
+  guid: 3f333662-6678-44e6-b1b6-5e0f71817339
 --- !u!114 &-8295257404408865376
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -14,6 +28,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Time: 85.58333333333333
   guid: 1a80768b-924b-48fc-89db-547cca58c3a8
+--- !u!114 &-7313342059795979945
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8988aeedf2779d34bb93467f3c18ccd8, type: 3}
+  m_Name: Muse Click Note
+  m_EditorClassIdentifier: 
+  m_Time: 9.183333333333334
+  guid: 049cc7c7-b3e9-4445-a50b-cf5ddeb30ed9
 --- !u!114 &-7221764890559925057
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -51,6 +79,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Time: 12.216666666666667
   guid: cb94f2a4-140c-4b3b-92be-ad17703bece5
+--- !u!114 &-5883439000922352013
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8988aeedf2779d34bb93467f3c18ccd8, type: 3}
+  m_Name: Muse Click Note
+  m_EditorClassIdentifier: 
+  m_Time: 19.883333333333347
+  guid: 21fdd360-0f5b-49a2-b9a3-0d90351347b8
 --- !u!114 &-5824849730450226738
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -65,6 +107,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Time: 40.58333333333333
   guid: 75cc1e40-7913-4137-a9bc-96ee76500d94
+--- !u!114 &-5807987460938825081
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8988aeedf2779d34bb93467f3c18ccd8, type: 3}
+  m_Name: Muse Click Note
+  m_EditorClassIdentifier: 
+  m_Time: 80.48333333333325
+  guid: 1a80768b-924b-48fc-89db-547cca58c3a8
 --- !u!114 &-5225097956874958930
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -78,6 +134,34 @@ MonoBehaviour:
   m_Name: Muse Click Note
   m_EditorClassIdentifier: 
   m_Time: 67.71666666666667
+  guid: 445195a9-f66d-46d4-a6bc-342731072a4e
+--- !u!114 &-5030060468245419769
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8988aeedf2779d34bb93467f3c18ccd8, type: 3}
+  m_Name: Muse Click Note
+  m_EditorClassIdentifier: 
+  m_Time: 78.04999999999991
+  guid: 048381e7-0018-4d37-8450-264ec37bec4c
+--- !u!114 &-4567438267224367109
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8988aeedf2779d34bb93467f3c18ccd8, type: 3}
+  m_Name: Muse Click Note
+  m_EditorClassIdentifier: 
+  m_Time: 64.68333333333334
   guid: 445195a9-f66d-46d4-a6bc-342731072a4e
 --- !u!114 &-4346573433941069965
 MonoBehaviour:
@@ -121,6 +205,48 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Time: 30.633333333333326
   guid: c1bdf84f-8b30-4dd2-82a7-7cc523521057
+--- !u!114 &-3879534711904703732
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8988aeedf2779d34bb93467f3c18ccd8, type: 3}
+  m_Name: Muse Click Note
+  m_EditorClassIdentifier: 
+  m_Time: 14.683333333333328
+  guid: 55ec1bbb-fb3f-49b7-a570-9b1489de9469
+--- !u!114 &-3733857033746044991
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8988aeedf2779d34bb93467f3c18ccd8, type: 3}
+  m_Name: Muse Click Note
+  m_EditorClassIdentifier: 
+  m_Time: 18.11666666666668
+  guid: a5d01d29-ef09-40cb-93fe-d420c0c89c06
+--- !u!114 &-3493388434068880542
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8988aeedf2779d34bb93467f3c18ccd8, type: 3}
+  m_Name: Muse Click Note
+  m_EditorClassIdentifier: 
+  m_Time: 27.6
+  guid: c1bdf84f-8b30-4dd2-82a7-7cc523521057
 --- !u!114 &-3147687448423838370
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -135,6 +261,105 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Time: 26.46666666666666
   guid: 621fbd7d-7f36-42c2-bac5-afc69c8168f4
+--- !u!114 &-2607842004345413496
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d02d082e35f7a741a573e77d10ec6e1, type: 3}
+  m_Name: Muse Note Track Track (1)
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_AnimClip: {fileID: 0}
+  m_Locked: 0
+  m_Muted: 0
+  m_CustomPlayableFullTypename: 
+  m_Curves: {fileID: 0}
+  m_Parent: {fileID: 11400000}
+  m_Children: []
+  m_Clips:
+  - m_Version: 1
+    m_Start: 28.3
+    m_ClipIn: 0
+    m_Asset: {fileID: 6964633416022105165}
+    m_Duration: 12.116666666666664
+    m_TimeScale: 1
+    m_ParentTrack: {fileID: -2607842004345413496}
+    m_EaseInDuration: 0
+    m_EaseOutDuration: 0
+    m_BlendInDuration: 0
+    m_BlendOutDuration: 0
+    m_MixInCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_BlendInCurveMode: 0
+    m_BlendOutCurveMode: 0
+    m_ExposedParameterNames: []
+    m_AnimationCurves: {fileID: 0}
+    m_Recordable: 0
+    m_PostExtrapolationMode: 0
+    m_PreExtrapolationMode: 0
+    m_PostExtrapolationTime: 0
+    m_PreExtrapolationTime: 0
+    m_DisplayName: MuseMultiClickNote
+  m_Markers:
+    m_Objects:
+    - {fileID: -7313342059795979945}
+    - {fileID: -3733857033746044991}
+    - {fileID: -5883439000922352013}
+    - {fileID: 7053066398851726067}
+    - {fileID: 1842379620011174932}
+    - {fileID: -5030060468245419769}
+    - {fileID: -5807987460938825081}
 --- !u!114 &-2093769718672287813
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -208,6 +433,34 @@ MonoBehaviour:
   m_bufferingTime: 0.1
   m_ClipProperties:
     volume: 1
+--- !u!114 &-196058064461600644
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8988aeedf2779d34bb93467f3c18ccd8, type: 3}
+  m_Name: Muse Click Note
+  m_EditorClassIdentifier: 
+  m_Time: 65.86666666666666
+  guid: 184176e5-1195-4644-9f24-5864b833475e
+--- !u!114 &-179042693694022579
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8988aeedf2779d34bb93467f3c18ccd8, type: 3}
+  m_Name: Muse Click Note
+  m_EditorClassIdentifier: 
+  m_Time: 16.449999999999996
+  guid: 49358524-55e9-4b4f-b885-6110196fe10c
 --- !u!114 &-67671276663537406
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -237,13 +490,41 @@ MonoBehaviour:
   m_Version: 0
   m_Tracks:
   - {fileID: 4782919938318321436}
-  - {fileID: 3124780687560276437}
-  - {fileID: 4672219440422311670}
+  - {fileID: 7328047285834774491}
+  - {fileID: -2607842004345413496}
   m_FixedDuration: 0
   m_EditorSettings:
     m_Framerate: 60
   m_DurationMode: 0
   m_MarkerTrack: {fileID: -7221764890559925057}
+--- !u!114 &1747602834824109606
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8988aeedf2779d34bb93467f3c18ccd8, type: 3}
+  m_Name: Muse Click Note
+  m_EditorClassIdentifier: 
+  m_Time: 37.550000000000004
+  guid: 75cc1e40-7913-4137-a9bc-96ee76500d94
+--- !u!114 &1842379620011174932
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8988aeedf2779d34bb93467f3c18ccd8, type: 3}
+  m_Name: Muse Click Note
+  m_EditorClassIdentifier: 
+  m_Time: 62.0666666666667
+  guid: dbd6d176-36fe-48a9-8cde-f17051dd65b1
 --- !u!114 &2563106618675639057
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -272,41 +553,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Time: 71.61666666666666
   guid: 184176e5-1195-4644-9f24-5864b833475e
---- !u!114 &3124780687560276437
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b46e36075dd1c124a8422c228e75e1fb, type: 3}
-  m_Name: Signal Track
-  m_EditorClassIdentifier: 
-  m_Version: 3
-  m_AnimClip: {fileID: 0}
-  m_Locked: 0
-  m_Muted: 0
-  m_CustomPlayableFullTypename: 
-  m_Curves: {fileID: 0}
-  m_Parent: {fileID: 11400000}
-  m_Children: []
-  m_Clips: []
-  m_Markers:
-    m_Objects:
-    - {fileID: -6821934394836587193}
-    - {fileID: -873511895490626995}
-    - {fileID: -1363425748297326435}
-    - {fileID: -816393632378408894}
-    - {fileID: -3930270382098346833}
-    - {fileID: 7428995112487212975}
-    - {fileID: -5824849730450226738}
-    - {fileID: -2093769718672287813}
-    - {fileID: -67671276663537406}
-    - {fileID: 9215924546935188460}
-    - {fileID: 2832266045775985323}
-    - {fileID: -5225097956874958930}
 --- !u!114 &3328108588268480523
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -321,6 +567,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Time: 24.983333333333327
   guid: 21fdd360-0f5b-49a2-b9a3-0d90351347b8
+--- !u!114 &3874659112656171401
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8988aeedf2779d34bb93467f3c18ccd8, type: 3}
+  m_Name: Muse Click Note
+  m_EditorClassIdentifier: 
+  m_Time: 36.333333333333336
+  guid: ebb915a3-6fcb-4bf9-896c-b8c9b69d5e14
 --- !u!114 &4553006208485292417
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -335,7 +595,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Time: 67.16666666666666
   guid: dbd6d176-36fe-48a9-8cde-f17051dd65b1
---- !u!114 &4672219440422311670
+--- !u!114 &4680224510191241222
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -344,27 +604,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b46e36075dd1c124a8422c228e75e1fb, type: 3}
-  m_Name: Signal Track (1)
+  m_Script: {fileID: 11500000, guid: 8988aeedf2779d34bb93467f3c18ccd8, type: 3}
+  m_Name: Muse Click Note
   m_EditorClassIdentifier: 
-  m_Version: 3
-  m_AnimClip: {fileID: 0}
-  m_Locked: 0
-  m_Muted: 0
-  m_CustomPlayableFullTypename: 
-  m_Curves: {fileID: 0}
-  m_Parent: {fileID: 11400000}
-  m_Children: []
-  m_Clips: []
-  m_Markers:
-    m_Objects:
-    - {fileID: -4213037401207005093}
-    - {fileID: -4346573433941069965}
-    - {fileID: 3328108588268480523}
-    - {fileID: -3147687448423838370}
-    - {fileID: 4553006208485292417}
-    - {fileID: -8295257404408865376}
-    - {fileID: 2563106618675639057}
+  m_Time: 49.35
+  guid: 155bdaf5-132d-4199-a990-b95abe0a3a22
 --- !u!114 &4782919938318321436
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -461,6 +705,95 @@ MonoBehaviour:
     volume: 1
     stereoPan: 0
     spatialBlend: 0
+--- !u!114 &5466381137787844536
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8988aeedf2779d34bb93467f3c18ccd8, type: 3}
+  m_Name: Muse Click Note
+  m_EditorClassIdentifier: 
+  m_Time: 11.249999999999993
+  guid: 1d7645f6-6c07-4f0d-84fc-2dc8ed66df74
+--- !u!114 &6832889127664817766
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8988aeedf2779d34bb93467f3c18ccd8, type: 3}
+  m_Name: Muse Click Note
+  m_EditorClassIdentifier: 
+  m_Time: 9.183333333333334
+  guid: cb94f2a4-140c-4b3b-92be-ad17703bece5
+--- !u!114 &6964633416022105165
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00c1ba3e99bfded4599093986fd6aebf, type: 3}
+  m_Name: MuseMultiClickNote
+  m_EditorClassIdentifier: 
+--- !u!114 &7053066398851726067
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8988aeedf2779d34bb93467f3c18ccd8, type: 3}
+  m_Name: Muse Click Note
+  m_EditorClassIdentifier: 
+  m_Time: 21.36666666666669
+  guid: 621fbd7d-7f36-42c2-bac5-afc69c8168f4
+--- !u!114 &7328047285834774491
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d02d082e35f7a741a573e77d10ec6e1, type: 3}
+  m_Name: Muse Note Track Track
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_AnimClip: {fileID: 0}
+  m_Locked: 0
+  m_Muted: 0
+  m_CustomPlayableFullTypename: 
+  m_Curves: {fileID: 0}
+  m_Parent: {fileID: 11400000}
+  m_Children: []
+  m_Clips: []
+  m_Markers:
+    m_Objects:
+    - {fileID: 6832889127664817766}
+    - {fileID: 5466381137787844536}
+    - {fileID: -3879534711904703732}
+    - {fileID: -179042693694022579}
+    - {fileID: -3493388434068880542}
+    - {fileID: 3874659112656171401}
+    - {fileID: 1747602834824109606}
+    - {fileID: 8820144685717808793}
+    - {fileID: 4680224510191241222}
+    - {fileID: -9095498415044105800}
+    - {fileID: -4567438267224367109}
+    - {fileID: -196058064461600644}
 --- !u!114 &7428995112487212975
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -475,6 +808,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Time: 39.36666666666666
   guid: ebb915a3-6fcb-4bf9-896c-b8c9b69d5e14
+--- !u!114 &8820144685717808793
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8988aeedf2779d34bb93467f3c18ccd8, type: 3}
+  m_Name: Muse Click Note
+  m_EditorClassIdentifier: 
+  m_Time: 47.949999999999996
+  guid: 5937a7ff-6c3f-4d73-8b3d-283a2dc8075f
 --- !u!114 &9215924546935188460
 MonoBehaviour:
   m_ObjectHideFlags: 1
