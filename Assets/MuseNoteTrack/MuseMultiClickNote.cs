@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class MuseMultiClickNote : MuseNoteTrackClip
 {
-
+    public int clickCount = 1;
 }

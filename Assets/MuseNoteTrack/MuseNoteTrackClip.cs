@@ -13,6 +13,10 @@ public abstract class MuseNoteTrackClip : PlayableAsset, ITimelineClipAsset
         get { return ClipCaps.None; }
     }
 
+    [SerializeField]
+    public string guid = Guid.NewGuid().ToString();
+
+
     //public override double duration => 0.1;
 
     public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)

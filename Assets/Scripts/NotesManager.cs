@@ -14,6 +14,9 @@ public class NotesManager : MonoBehaviour
     GameObject clickNotePrefab;
 
     [SerializeField]
+    GameObject multiClickNotePrefab;
+
+    [SerializeField]
     Transform trackRoot;
 
     [SerializeField]
@@ -33,6 +36,7 @@ public class NotesManager : MonoBehaviour
     {
         NONE,
         PERFECT,
+        PENDING,
         FAILED,
     }
 
@@ -43,9 +47,9 @@ public class NotesManager : MonoBehaviour
         public float time;
         public float offsetTime = 0.5f;
 
-        InputResult result = InputResult.NONE;
+        protected InputResult result = InputResult.NONE;
 
-        public InputResult Update()
+        public virtual InputResult Update()
         {
             if (noteObject.transform.position.x < 0)
             {
@@ -56,7 +60,7 @@ public class NotesManager : MonoBehaviour
             return result;
         }
 
-        public InputResult OnInput(InputEvent ev)
+        public virtual InputResult OnInput(InputEvent ev)
         {
             if (ev == InputEvent.PRESSED)
             {
@@ -74,6 +78,85 @@ public class NotesManager : MonoBehaviour
         }
     }
 
+    class MutiClickNote : Note
+    {
+        public int clickCount = 1;
+        public float duration = 1;
+        public int clickedCount = 0;
+
+        public override InputResult OnInput(InputEvent ev)
+        {
+            if (ev == InputEvent.PRESSED)
+            {
+                if (result == InputResult.NONE)
+                {
+                    if (Mathf.Abs(NotesManager.instance.time - time) > offsetTime
+                        || Mathf.Abs(NotesManager.instance.time - (time + duration)) > offsetTime
+                        || (NotesManager.instance.time > time && NotesManager.instance.time < (time + duration)))
+                    {
+                        clickedCount++;
+                        Debug.Log($"MutiClickNote performed:{clickedCount}, time:{NotesManager.instance.time}");
+                        if (clickedCount >= clickCount)
+                        {
+                            result = InputResult.PERFECT;
+                        }
+                        else
+                        {
+                            result = InputResult.PENDING;
+                        }
+
+                    }
+                    else
+                    {
+                        result = InputResult.NONE;
+                    }
+                }
+                else if (result == InputResult.PENDING)
+                {
+                    if (Mathf.Abs(NotesManager.instance.time - time) > offsetTime
+                        || Mathf.Abs(NotesManager.instance.time - (time + duration)) > offsetTime
+                        || (NotesManager.instance.time > time && NotesManager.instance.time < (time + duration)))
+                    {
+                        clickedCount++;
+                        Debug.Log($"MutiClickNote performed:{clickedCount}, time:{NotesManager.instance.time}");
+                        if (clickedCount >= clickCount)
+                        {
+                            result = InputResult.PERFECT;
+                        }
+                        else
+                        {
+                            result = InputResult.PENDING;
+                        }
+                    }
+                }
+
+            }
+            return result;
+
+
+            //return base.OnInput(ev);
+        }
+
+        public override InputResult Update()
+        {
+            if (result == InputResult.PENDING || result == InputResult.NONE)
+            {
+                if (noteObject.transform.position.x + duration * 2 < 0)
+                {
+                    if (clickedCount < clickCount)
+                    {
+                        result = InputResult.FAILED;
+                        Debug.Log($"Note Result FAILED: {time}, {id}");
+                    }
+                    else
+                    {
+                        result = InputResult.PERFECT;
+                    }
+                }
+            }
+            return result;
+        }
+    }
 
     float unitPerSecond = 2.0f;
 
@@ -88,7 +171,7 @@ public class NotesManager : MonoBehaviour
                 var note = notes.Peek();
                 var result = note.Update();
 
-                if (result != InputResult.NONE)
+                if (result != InputResult.NONE && result != InputResult.PENDING)
                 {
                     notes.Dequeue();
                 }
@@ -163,36 +246,105 @@ public class NotesManager : MonoBehaviour
         GetComponent<PlayableDirector>().Play();
     }
 
+
+    Note CreateNoteInstance(object so, Transform track)
+    {
+        if (so is MuseNoteMarker)
+        {
+            MuseNoteMarker n = so as MuseNoteMarker;
+            var note = GameObject.Instantiate(clickNotePrefab, track);
+            note.transform.localPosition = Vector3.right * (float)n.time * unitPerSecond;
+
+            return new Note() { noteObject = note, time = (float)n.time, id = n.guid };
+        }
+
+        else if (so is TimelineClip)
+        {
+            TimelineClip tc = so as TimelineClip;
+            if (tc.asset is MuseMultiClickNote)
+            {
+                var n = tc.asset as MuseMultiClickNote;
+                var note = GameObject.Instantiate(multiClickNotePrefab, track);
+                note.transform.localPosition = Vector3.right * (float)tc.start * unitPerSecond;
+                note.transform.localScale = new Vector3(1 * (float)tc.duration * unitPerSecond, 1, 1);
+
+                return new MutiClickNote()
+                {
+                    noteObject = note,
+                    time = (float)tc.start,
+                    duration = (float)tc.duration,
+                    clickCount = n.clickCount,
+                    id = n.guid,
+                };
+            }
+
+        }
+
+        return null;
+
+    }
+
     void Load()
     {
         if (gameLevel == null) { return; }
         if (trackRoot == null) { return; }
         if (clickNotePrefab == null) { return; }
 
-        var tracks = gameLevel.GetRootTracks().Where( x => x is SignalTrack).ToArray();
+        var tracks = gameLevel.GetRootTracks().Where(x => x is MuseNoteTrackTrack).ToArray();
 
         var leftTrack = tracks[0];
         var leftNotes = leftTrack.GetMarkers();
+        var leftNoteClips = leftTrack.GetClips();
+
+        var tempNotesList = new List<Note>();
 
         foreach (var m in leftNotes)
         {
             MuseNoteMarker n = m as MuseNoteMarker;
             var note = GameObject.Instantiate(clickNotePrefab, this.leftTrack);
             note.transform.localPosition = Vector3.right * (float)n.time * unitPerSecond;
-            this.tracks[0].AddNote(new Note() { noteObject = note, time = (float)n.time, id = n.guid });
+            // this.tracks[0].AddNote(new Note() { noteObject = note, time = (float)n.time, id = n.guid });
+            tempNotesList.Add(new Note() { noteObject = note, time = (float)n.time, id = n.guid });
         }
+
+        foreach (var m in leftNoteClips)
+        {
+            var note = CreateNoteInstance(m, this.leftTrack);
+            tempNotesList.Add(note);
+        }
+
+        tempNotesList = tempNotesList.OrderBy(x => x.time).ToList();
+        foreach (var m in tempNotesList)
+        {
+            this.tracks[0].AddNote(m);
+        }
+
 
         var rightTrack = tracks[1];
         var rightNotes = rightTrack.GetMarkers();
+        var rightNoteClips = rightTrack.GetClips();
+        tempNotesList.Clear();
 
         foreach (var m in rightNotes)
         {
             MuseNoteMarker n = m as MuseNoteMarker;
             var note = GameObject.Instantiate(clickNotePrefab, this.rightTrack);
             note.transform.localPosition = Vector3.right * (float)n.time * unitPerSecond;
-            this.tracks[1].AddNote(new Note() { noteObject = note, time = (float)n.time, id = n.guid });
+            // this.tracks[1].AddNote(new Note() { noteObject = note, time = (float)n.time, id = n.guid });
+            tempNotesList.Add(new Note() { noteObject = note, time = (float)n.time, id = n.guid });
         }
 
+        foreach (var m in rightNoteClips)
+        {
+            var note = CreateNoteInstance(m, this.rightTrack);
+            tempNotesList.Add(note);
+        }
+
+        tempNotesList = tempNotesList.OrderBy(x => x.time).ToList();
+        foreach (var m in tempNotesList)
+        {
+            this.tracks[1].AddNote(m);
+        }
     }
 
     Vector3 trackOffset = Vector3.zero;
