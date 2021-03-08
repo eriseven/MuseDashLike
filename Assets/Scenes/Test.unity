@@ -281,6 +281,8 @@ MonoBehaviour:
     type: 3}
   multiClickNotePrefab: {fileID: 8280585060127348109, guid: 180cc463c37805f458e2cda202b162b2,
     type: 3}
+  longClickNotePrefab: {fileID: 8280585060127348109, guid: 72d68c36defee244aaedeaa81e41c3ee,
+    type: 3}
   trackRoot: {fileID: 206174451}
   leftTrack: {fileID: 1358315512}
   rightTrack: {fileID: 359030301}
@@ -509,7 +511,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
@@ -1042,7 +1044,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -213, y: -171}
+  m_AnchoredPosition: {x: -496, y: -399}
   m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1422355962
@@ -1502,7 +1504,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 220, y: -171}
+  m_AnchoredPosition: {x: 495, y: -404}
   m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2006203973

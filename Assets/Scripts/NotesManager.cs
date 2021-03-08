@@ -17,6 +17,9 @@ public class NotesManager : MonoBehaviour
     GameObject multiClickNotePrefab;
 
     [SerializeField]
+    GameObject longClickNotePrefab;
+
+    [SerializeField]
     Transform trackRoot;
 
     [SerializeField]
@@ -72,6 +75,65 @@ public class NotesManager : MonoBehaviour
                 {
                     result = InputResult.PERFECT;
                     Debug.Log($"Note Result PERFECT: {time}, {id}");
+                }
+            }
+            return result;
+        }
+    }
+
+    class LongClickNote : Note
+    {
+        public float duration = 1;
+        float pressTime = -1;
+        float pressedDuration = 0;
+
+        public override InputResult OnInput(InputEvent ev)
+        {
+
+            if (result == InputResult.PENDING || result == InputResult.NONE)
+            {
+                if (ev == InputEvent.PRESSED)
+                {
+                    if (Mathf.Abs(NotesManager.instance.time - time) > offsetTime
+                        || Mathf.Abs(NotesManager.instance.time - (time + duration)) > offsetTime
+                        || (NotesManager.instance.time > time && NotesManager.instance.time < (time + duration)))
+
+                    {
+                        result = InputResult.PENDING;
+                        pressTime = NotesManager.instance.time;
+                        //Debug.Log($"Note Result PERFECT: {time}, {id}");
+                    }
+                    else
+                    {
+                        result = InputResult.NONE;
+                    }
+                }
+            }
+
+            if (ev == InputEvent.RELEASED && result == InputResult.PENDING)
+            {
+                pressedDuration = NotesManager.instance.time - pressTime;
+                result = InputResult.PERFECT;
+            }
+
+            return result;
+        }
+
+        public override InputResult Update()
+        {
+            if (result == InputResult.PENDING || result == InputResult.NONE)
+            {
+                if (noteObject.transform.position.x + duration * 2 < 0)
+                {
+                    if ((pressedDuration / duration) > 0.5)
+                    {
+                        result = InputResult.PERFECT;
+                    }
+                    else
+                    {
+                        result = InputResult.FAILED;
+                        Debug.Log($"Note Result FAILED: {time}, {id}");
+                    }
                 }
             }
             return result;
@@ -257,7 +319,6 @@ public class NotesManager : MonoBehaviour
 
             return new Note() { noteObject = note, time = (float)n.time, id = n.guid };
         }
-
         else if (so is TimelineClip)
         {
             TimelineClip tc = so as TimelineClip;
@@ -274,6 +335,22 @@ public class NotesManager : MonoBehaviour
                     time = (float)tc.start,
                     duration = (float)tc.duration,
                     clickCount = n.clickCount,
+                    id = n.guid,
+                };
+            }
+            else if (tc.asset is MuseLongClickNote)
+            {
+                var n = tc.asset as MuseLongClickNote;
+                var note = GameObject.Instantiate(longClickNotePrefab, track);
+                note.transform.localPosition = Vector3.right * (float)tc.start * unitPerSecond;
+                note.transform.localScale = new Vector3(1 * (float)tc.duration * unitPerSecond, 1, 1);
+
+
+                return new LongClickNote()
+                {
+                    noteObject = note,
+                    time = (float)tc.start,
+                    duration = (float)tc.duration,
                     id = n.guid,
                 };
             }
