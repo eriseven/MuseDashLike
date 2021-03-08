@@ -36,11 +36,33 @@
                 },
                 {
                     "name": "",
+                    "id": "01d86959-5ef9-4425-9846-7401bf28f861",
+                    "path": "<Keyboard>/#(F)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LNode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "76b730e2-495c-4eea-be25-0202f4de3651",
                     "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
+                    "action": "RNode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1b3f55cf-4c6b-4396-83cc-b0c8d65ae1c3",
+                    "path": "<Keyboard>/#(J)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
                     "action": "RNode",
                     "isComposite": false,
                     "isPartOfComposite": false

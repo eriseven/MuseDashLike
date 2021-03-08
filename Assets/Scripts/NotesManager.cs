@@ -4,7 +4,9 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
 using UnityEngine.Timeline;
+using UnityEngine.UI;
 
 public class NotesManager : MonoBehaviour
 {
@@ -132,7 +134,9 @@ public class NotesManager : MonoBehaviour
         {
             if (result == InputResult.PENDING || result == InputResult.NONE)
             {
-                if (noteObject.transform.position.x + duration * 2 < 0)
+                //if (noteObject.transform.position.x + duration * 2 < 0)
+
+                if (NotesManager.instance.time - (time + duration) > offsetTime)
                 {
                     pressedDuration = NotesManager.instance.time - pressTime;
                     if ((pressedDuration / duration) > perfromPercent)
@@ -213,7 +217,8 @@ public class NotesManager : MonoBehaviour
         {
             if (result == InputResult.PENDING || result == InputResult.NONE)
             {
-                if (noteObject.transform.position.x + duration * 2 < 0)
+                //if (noteObject.transform.position.x + duration * 2 < 0)
+                if (NotesManager.instance.time - (time + duration) > offsetTime)
                 {
                     if (clickedCount < clickCount)
                     {
@@ -230,7 +235,11 @@ public class NotesManager : MonoBehaviour
         }
     }
 
-    float unitPerSecond = 2.0f;
+    [SerializeField]
+    float _unitPerSecond = 2.0f;
+
+    public float unitPerSecond => _unitPerSecond;
+
 
     class NoteTrack
     {
@@ -287,10 +296,15 @@ public class NotesManager : MonoBehaviour
         }
     }
 
-    void Start()
+    IEnumerator Start()
     {
         Load();
-        StartGame();
+        if (startGame != null)
+        {
+            startGame.gameObject.SetActive(true);
+        }
+        yield return null;
+        //StartGame();
     }
 
     // Update is called once per frame
@@ -311,13 +325,37 @@ public class NotesManager : MonoBehaviour
     public float startTime { get; private set; }
     public float time => Time.realtimeSinceStartup - startTime;
 
-    void StartGame()
+    [SerializeField]
+    Button startGame; 
+
+    [SerializeField]
+    Button restartGame; 
+
+    public void StartGame()
     {
+        if (startGame != null)
+        {
+            startGame.gameObject.SetActive(false);
+        }
+
         isPlaying = true;
         startTime = Time.realtimeSinceStartup;
         GetComponent<PlayableDirector>().Play();
     }
 
+    public void OnGameEnd()
+    {
+        isPlaying = false;
+        if (restartGame != null)
+        {
+            restartGame.gameObject.SetActive(true);
+        }
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene("Test");
+    }
 
     Note CreateNoteInstance(object so, Transform track)
     {
@@ -325,7 +363,7 @@ public class NotesManager : MonoBehaviour
         {
             MuseNoteMarker n = so as MuseNoteMarker;
             var note = GameObject.Instantiate(clickNotePrefab, track);
-            note.transform.localPosition = Vector3.right * (float)n.time * unitPerSecond;
+            note.transform.localPosition = Vector3.right * (float)n.time * _unitPerSecond;
 
             return new Note() { noteObject = note, time = (float)n.time, id = n.guid };
         }
@@ -336,8 +374,8 @@ public class NotesManager : MonoBehaviour
             {
                 var n = tc.asset as MuseMultiClickNote;
                 var note = GameObject.Instantiate(multiClickNotePrefab, track);
-                note.transform.localPosition = Vector3.right * (float)tc.start * unitPerSecond;
-                note.transform.localScale = new Vector3(1 * (float)tc.duration * unitPerSecond, 1, 1);
+                note.transform.localPosition = Vector3.right * (float)tc.start * _unitPerSecond;
+                note.transform.localScale = new Vector3(1 * (float)tc.duration * _unitPerSecond, 1, 1);
 
                 return new MutiClickNote()
                 {
@@ -352,8 +390,8 @@ public class NotesManager : MonoBehaviour
             {
                 var n = tc.asset as MuseLongClickNote;
                 var note = GameObject.Instantiate(longClickNotePrefab, track);
-                note.transform.localPosition = Vector3.right * (float)tc.start * unitPerSecond;
-                note.transform.localScale = new Vector3(1 * (float)tc.duration * unitPerSecond, 1, 1);
+                note.transform.localPosition = Vector3.right * (float)tc.start * _unitPerSecond;
+                note.transform.localScale = new Vector3(1 * (float)tc.duration * _unitPerSecond, 1, 1);
 
 
                 return new LongClickNote()
@@ -390,7 +428,7 @@ public class NotesManager : MonoBehaviour
         {
             MuseNoteMarker n = m as MuseNoteMarker;
             var note = GameObject.Instantiate(clickNotePrefab, this.leftTrack);
-            note.transform.localPosition = Vector3.right * (float)n.time * unitPerSecond;
+            note.transform.localPosition = Vector3.right * (float)n.time * _unitPerSecond;
             // this.tracks[0].AddNote(new Note() { noteObject = note, time = (float)n.time, id = n.guid });
             tempNotesList.Add(new Note() { noteObject = note, time = (float)n.time, id = n.guid });
         }
@@ -417,7 +455,7 @@ public class NotesManager : MonoBehaviour
         {
             MuseNoteMarker n = m as MuseNoteMarker;
             var note = GameObject.Instantiate(clickNotePrefab, this.rightTrack);
-            note.transform.localPosition = Vector3.right * (float)n.time * unitPerSecond;
+            note.transform.localPosition = Vector3.right * (float)n.time * _unitPerSecond;
             // this.tracks[1].AddNote(new Note() { noteObject = note, time = (float)n.time, id = n.guid });
             tempNotesList.Add(new Note() { noteObject = note, time = (float)n.time, id = n.guid });
         }
@@ -443,7 +481,7 @@ public class NotesManager : MonoBehaviour
             var playedTime = Time.realtimeSinceStartup - startTime;
 
             //trackOffset.x = playedTime * unitPerSecond;
-            trackRoot.transform.localPosition = -1 * Vector3.right * playedTime * unitPerSecond;
+            trackRoot.transform.localPosition = -1 * Vector3.right * playedTime * _unitPerSecond;
         }
     }
 
@@ -471,6 +509,14 @@ public class NotesManager : MonoBehaviour
         if (context.canceled)
         {
             tracks[0].OnInput(InputEvent.RELEASED);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (instance == this)
+        {
+            instance = null;
         }
     }
 }
