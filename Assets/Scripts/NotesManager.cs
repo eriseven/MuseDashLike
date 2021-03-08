@@ -84,6 +84,8 @@ public class NotesManager : MonoBehaviour
     class LongClickNote : Note
     {
         public float duration = 1;
+        public float perfromPercent = 0.8f;
+
         float pressTime = -1;
         float pressedDuration = 0;
 
@@ -113,7 +115,14 @@ public class NotesManager : MonoBehaviour
             if (ev == InputEvent.RELEASED && result == InputResult.PENDING)
             {
                 pressedDuration = NotesManager.instance.time - pressTime;
-                result = InputResult.PERFECT;
+                if ((pressedDuration / duration) > perfromPercent)
+                {
+                    result = InputResult.PERFECT;
+                }
+                else
+                {
+                    result = InputResult.FAILED;
+                }
             }
 
             return result;
@@ -125,7 +134,8 @@ public class NotesManager : MonoBehaviour
             {
                 if (noteObject.transform.position.x + duration * 2 < 0)
                 {
-                    if ((pressedDuration / duration) > 0.5)
+                    pressedDuration = NotesManager.instance.time - pressTime;
+                    if ((pressedDuration / duration) > perfromPercent)
                     {
                         result = InputResult.PERFECT;
                     }
@@ -351,6 +361,7 @@ public class NotesManager : MonoBehaviour
                     noteObject = note,
                     time = (float)tc.start,
                     duration = (float)tc.duration,
+                    perfromPercent = n.performPercent,
                     id = n.guid,
                 };
             }
