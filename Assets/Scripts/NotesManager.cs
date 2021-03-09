@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -47,12 +48,15 @@ public class NotesManager : MonoBehaviour
 
     class Note
     {
+        public Action OnPerfect;
         public GameObject noteObject;
         public string id;
         public float time;
         public float offsetTime = 0.5f;
 
         protected InputResult result = InputResult.NONE;
+
+        public InputResult currentResult => result;
 
         public virtual InputResult Update()
         {
@@ -76,6 +80,7 @@ public class NotesManager : MonoBehaviour
                 else
                 {
                     result = InputResult.PERFECT;
+                    OnPerfect();
                     Debug.Log($"Note Result PERFECT: {time}, {id}");
                 }
             }
@@ -104,6 +109,7 @@ public class NotesManager : MonoBehaviour
 
                     {
                         result = InputResult.PENDING;
+                        OnPerfect();
                         pressTime = NotesManager.instance.time;
                         //Debug.Log($"Note Result PERFECT: {time}, {id}");
                     }
@@ -120,6 +126,7 @@ public class NotesManager : MonoBehaviour
                 if ((pressedDuration / duration) > perfromPercent)
                 {
                     result = InputResult.PERFECT;
+                    OnPerfect();
                 }
                 else
                 {
@@ -142,6 +149,7 @@ public class NotesManager : MonoBehaviour
                     if ((pressedDuration / duration) > perfromPercent)
                     {
                         result = InputResult.PERFECT;
+                        OnPerfect();
                     }
                     else
                     {
@@ -171,6 +179,7 @@ public class NotesManager : MonoBehaviour
                         || (NotesManager.instance.time > time && NotesManager.instance.time < (time + duration)))
                     {
                         clickedCount++;
+                        OnPerfect();
                         Debug.Log($"MutiClickNote performed:{clickedCount}, time:{NotesManager.instance.time}");
                         if (clickedCount >= clickCount)
                         {
@@ -194,6 +203,7 @@ public class NotesManager : MonoBehaviour
                         || (NotesManager.instance.time > time && NotesManager.instance.time < (time + duration)))
                     {
                         clickedCount++;
+                        OnPerfect();
                         Debug.Log($"MutiClickNote performed:{clickedCount}, time:{NotesManager.instance.time}");
                         if (clickedCount >= clickCount)
                         {
@@ -244,12 +254,15 @@ public class NotesManager : MonoBehaviour
     class NoteTrack
     {
 
+        public Action OnPerfect;
+
         Queue<Note> notes = new Queue<Note>();
         public void Update()
         {
             if (notes.Count > 0)
             {
                 var note = notes.Peek();
+                var originResult = note.currentResult;
                 var result = note.Update();
 
                 if (result != InputResult.NONE && result != InputResult.PENDING)
@@ -260,12 +273,17 @@ public class NotesManager : MonoBehaviour
                 if (result == InputResult.PERFECT)
                 {
                     GameObject.Destroy(note.noteObject);
+                    if (result != originResult)
+                    {
+                        OnPerfect();
+                    }
                 }
             }
         }
 
         public void AddNote(Note note)
         {
+            note.OnPerfect += OnPerfect;
             notes.Enqueue(note);
         }
 
@@ -294,6 +312,9 @@ public class NotesManager : MonoBehaviour
         {
             tracks[i] = new NoteTrack();
         }
+
+        tracks[0].OnPerfect += OnLeftPerfect;
+        tracks[1].OnPerfect += OnRightPerfect;
     }
 
     IEnumerator Start()
@@ -329,7 +350,25 @@ public class NotesManager : MonoBehaviour
     Button startGame; 
 
     [SerializeField]
-    Button restartGame; 
+    Button restartGame;
+
+    [SerializeField]
+    ParticleSystem leftPerfectFx;
+
+    [SerializeField]
+    ParticleSystem rightPerfectFx;
+
+    void OnLeftPerfect()
+    {
+        leftPerfectFx.Play();
+    }
+
+    void OnRightPerfect()
+    {
+        rightPerfectFx.Play();
+    }
+
+
 
     public void StartGame()
     {
