@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Playables;
@@ -32,6 +33,8 @@ public class NotesManager : MonoBehaviour
     [SerializeField]
     Transform rightTrack;
 
+    [SerializeField]
+    TextMeshProUGUI scoreLable;
 
 
     public enum InputEvent
@@ -60,6 +63,10 @@ public class NotesManager : MonoBehaviour
         totalScore += score;
 
         Debug.Log($"Get Score:{score}, Total Score:{totalScore}");
+        if (scoreLable != null)
+        {
+            scoreLable.text = totalScore.ToString();
+        }
     }
 
     [Serializable]
@@ -135,6 +142,83 @@ public class NotesManager : MonoBehaviour
                     LogResult();
                 }
             }
+            return result;
+        }
+    }
+
+    class DoubleClickNote : Note
+    {
+        public DoubleClickNote slaveNote;
+
+        InputResult _pendingResult = InputResult.NONE;
+        public InputResult pendingResult => _pendingResult;
+
+        public void NotifyFinalResult(InputResult result)
+        {
+            this.result = result;
+            if (result != InputResult.NONE || result != InputResult.FAILED || result != InputResult.PENDING)
+            {
+                OnPerfect(result);
+                LogResult();
+            }
+        }
+
+        public override InputResult OnInput(InputEvent ev)
+        {
+            if (_pendingResult != InputResult.NONE)
+            {
+                return _pendingResult;
+            }
+
+            if (ev == InputEvent.PRESSED)
+            {
+                var currOffsetTime = Mathf.Abs(NotesManager.instance.time - time);
+                if (currOffsetTime <= perfectOffsetTime)
+                {
+                    _pendingResult = InputResult.PERFECT;
+                }
+                else if (currOffsetTime <= goodOffsetTime)
+                {
+                    _pendingResult = InputResult.GOOD;
+                }
+                else if (currOffsetTime <= successOffsetTime)
+                {
+                    _pendingResult = InputResult.SUCCESS;
+                }
+
+                //if (result != InputResult.NONE && result != InputResult.FAILED && result != InputResult.PENDING)
+                //{
+                //    OnPerfect(result);
+                //    LogResult();
+                //}
+            }
+            return result;
+        }
+
+        public override InputResult Update()
+        {
+            var xPos = noteObject.transform.position.x;
+            if (xPos + successOffsetTime < 0)
+            {
+                result = InputResult.FAILED;
+                _pendingResult = result;
+                LogResult();
+            }
+
+            if (_pendingResult != InputResult.NONE || _pendingResult != InputResult.FAILED || _pendingResult != InputResult.PENDING)
+            {
+                if (slaveNote != null)
+                {
+                    var _slaveResult = slaveNote.pendingResult;
+                    if (_slaveResult != InputResult.NONE || _slaveResult != InputResult.FAILED || _slaveResult != InputResult.PENDING)
+                    {
+                        result = (InputResult)Math.Max((int)_pendingResult, (int)_slaveResult);
+                        LogResult();
+                        slaveNote.NotifyFinalResult(result);
+                    }
+                }
+            }
+
             return result;
         }
     }
@@ -497,6 +581,39 @@ public class NotesManager : MonoBehaviour
                 successOffsetTime = n.successOffsetTime,
             };
         }
+        else if (so is MuseDoubleClickNote)
+        {
+            MuseDoubleClickNote n = so as MuseDoubleClickNote;
+            var note = GameObject.Instantiate(clickNotePrefab, track);
+            note.transform.localPosition = Vector3.right * (float)n.time * _unitPerSecond;
+
+            var otherNote = GameObject.Instantiate(clickNotePrefab, track);
+            otherNote.transform.localPosition = Vector3.right * (float)n.time * _unitPerSecond;
+
+            var slave = new DoubleClickNote()
+            {
+                noteObject = otherNote,
+                time = (float)n.time,
+                id = $"slave-for{n.guid}",
+                //id = n.guid,
+                perfectOffsetTime = n.successOffsetTime,
+                goodOffsetTime = n.goodOffsetTime,
+                successOffsetTime = n.successOffsetTime,
+            };
+
+
+            return new DoubleClickNote()
+            {
+                noteObject = note,
+                time = (float)n.time,
+                id = n.guid,
+                perfectOffsetTime = n.successOffsetTime,
+                goodOffsetTime = n.goodOffsetTime,
+                successOffsetTime = n.successOffsetTime,
+                slaveNote = slave,
+            };
+
+        }
         else if (so is TimelineClip)
         {
             TimelineClip tc = so as TimelineClip;
@@ -560,11 +677,8 @@ public class NotesManager : MonoBehaviour
 
         foreach (var m in leftNotes)
         {
-            MuseNoteMarker n = m as MuseNoteMarker;
-            var note = GameObject.Instantiate(clickNotePrefab, this.leftTrack);
-            note.transform.localPosition = Vector3.right * (float)n.time * _unitPerSecond;
-            // this.tracks[0].AddNote(new Note() { noteObject = note, time = (float)n.time, id = n.guid });
-            tempNotesList.Add(new Note() { noteObject = note, time = (float)n.time, id = n.guid });
+            var note = CreateNoteInstance(m, this.leftTrack);
+            tempNotesList.Add(note);
         }
 
         foreach (var m in leftNoteClips)
@@ -580,6 +694,8 @@ public class NotesManager : MonoBehaviour
         }
 
 
+        var slaveNotes = tempNotesList.Where(x => x is DoubleClickNote).Select(x => ((DoubleClickNote)x).slaveNote);
+
         var rightTrack = tracks[1];
         var rightNotes = rightTrack.GetMarkers();
         var rightNoteClips = rightTrack.GetClips();
@@ -587,17 +703,19 @@ public class NotesManager : MonoBehaviour
 
         foreach (var m in rightNotes)
         {
-            MuseNoteMarker n = m as MuseNoteMarker;
-            var note = GameObject.Instantiate(clickNotePrefab, this.rightTrack);
-            note.transform.localPosition = Vector3.right * (float)n.time * _unitPerSecond;
-            // this.tracks[1].AddNote(new Note() { noteObject = note, time = (float)n.time, id = n.guid });
-            tempNotesList.Add(new Note() { noteObject = note, time = (float)n.time, id = n.guid });
+            var note = CreateNoteInstance(m, this.rightTrack);
+            tempNotesList.Add(note);
         }
 
         foreach (var m in rightNoteClips)
         {
             var note = CreateNoteInstance(m, this.rightTrack);
             tempNotesList.Add(note);
+        }
+
+        foreach (var m in slaveNotes)
+        {
+            tempNotesList.Add(m);
         }
 
         tempNotesList = tempNotesList.OrderBy(x => x.time).ToList();
