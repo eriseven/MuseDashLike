@@ -288,6 +288,32 @@ MonoBehaviour:
   trackRoot: {fileID: 206174451}
   leftTrack: {fileID: 1358315512}
   rightTrack: {fileID: 359030301}
+  scoreConfig:
+    reorderableList:
+      canAdd: 1
+      canRemove: 1
+      draggable: 1
+      expandable: 1
+      multipleSelection: 1
+      isExpanded: 0
+      label:
+        m_Text: Keys
+        m_Image: {fileID: 0}
+        m_Tooltip: 
+      headerHeight: 18
+      footerHeight: 13
+      slideEasing: 0.15
+      verticalSpacing: 2
+      showDefaultBackground: 1
+      elementDisplayType: 0
+      elementNameProperty: 
+      elementNameOverride: 
+      elementIcon: {fileID: 0}
+    reqReferences: {fileID: 0}
+    isExpanded: 0
+    _keyValues: 010000000200000003000000
+    _keys: 010000000200000003000000
+    _values: 0a0000000800000005000000
   _unitPerSecond: 10
   startGame: {fileID: 1335627699}
   restartGame: {fileID: 1048172896}

@@ -4,5 +4,7 @@ using UnityEngine;
 
 public class MuseLongClickNote : MuseNoteTrackClip
 {
-    public float performPercent = 0.8f;
+    public float perfectPercent = 0.9f;
+    public float goodPercent = 0.8f;
+    public float successPercent = 0.7f;
 }

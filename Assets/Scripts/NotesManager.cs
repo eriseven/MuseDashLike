@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RotaryHeart.Lib.SerializableDictionary;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,7 @@ public class NotesManager : MonoBehaviour
     Transform rightTrack;
 
 
+
     public enum InputEvent
     {
         PRESSED,
@@ -42,28 +44,63 @@ public class NotesManager : MonoBehaviour
     {
         NONE,
         PERFECT,
+        GOOD,
+        SUCCESS,
         PENDING,
         FAILED,
     }
 
+
+    int totalScore = 0;
+
+    void OnPerfect(InputResult result)
+    {
+        int score = 0;
+        scoreConfig.TryGetValue(result, out score);
+        totalScore += score;
+
+        Debug.Log($"Get Score:{score}, Total Score:{totalScore}");
+    }
+
+    [Serializable]
+    public class PerformScoreConfig : SerializableDictionaryBase<InputResult, int> { }
+
+    public PerformScoreConfig scoreConfig;
+
+
     class Note
     {
-        public Action OnPerfect;
+        public Action<InputResult> OnPerfect;
         public GameObject noteObject;
         public string id;
         public float time;
-        public float offsetTime = 0.5f;
+
+        public float perfectOffsetTime = 0.5f;
+        public float goodOffsetTime = 0.7f;
+        public float successOffsetTime = 1f;
+
 
         protected InputResult result = InputResult.NONE;
 
         public InputResult currentResult => result;
 
+        protected void LogResult()
+        {
+            Debug.Log($"Note Result {result.ToString()}: {time}, {id}");
+        }
+
+        protected virtual InputResult CheckResult()
+        {
+            return InputResult.NONE;
+        }
+
         public virtual InputResult Update()
         {
-            if (noteObject.transform.position.x < 0)
+            var xPos = noteObject.transform.position.x;
+            if (xPos + successOffsetTime < 0)
             {
                 result = InputResult.FAILED;
-                Debug.Log($"Note Result FAILED: {time}, {id}");
+                LogResult();
             }
 
             return result;
@@ -71,17 +108,31 @@ public class NotesManager : MonoBehaviour
 
         public virtual InputResult OnInput(InputEvent ev)
         {
+            if (currentResult != InputResult.NONE)
+            {
+                return currentResult;
+            }
+
             if (ev == InputEvent.PRESSED)
             {
-                if (Mathf.Abs(NotesManager.instance.time - time) > offsetTime)
-                {
-                    result = InputResult.NONE;
-                }
-                else
+                var currOffsetTime = Mathf.Abs(NotesManager.instance.time - time);
+                if (currOffsetTime <= perfectOffsetTime)
                 {
                     result = InputResult.PERFECT;
-                    OnPerfect();
-                    Debug.Log($"Note Result PERFECT: {time}, {id}");
+                }
+                else if (currOffsetTime <= goodOffsetTime)
+                {
+                    result = InputResult.GOOD;
+                }
+                else if (currOffsetTime <= successOffsetTime)
+                {
+                    result = InputResult.SUCCESS;
+                }
+
+                if (result != InputResult.NONE && result != InputResult.FAILED && result != InputResult.PENDING)
+                {
+                    OnPerfect(result);
+                    LogResult();
                 }
             }
             return result;
@@ -91,7 +142,9 @@ public class NotesManager : MonoBehaviour
     class LongClickNote : Note
     {
         public float duration = 1;
-        public float perfromPercent = 0.8f;
+        public float perfectPercent = 0.9f;
+        public float goodPercent = 0.8f;
+        public float successPercent = 0.7f;
 
         float pressTime = -1;
         float pressedDuration = 0;
@@ -103,13 +156,13 @@ public class NotesManager : MonoBehaviour
             {
                 if (ev == InputEvent.PRESSED)
                 {
-                    if (Mathf.Abs(NotesManager.instance.time - time) > offsetTime
-                        || Mathf.Abs(NotesManager.instance.time - (time + duration)) > offsetTime
+                    if (Mathf.Abs(NotesManager.instance.time - time) > perfectOffsetTime
+                        || Mathf.Abs(NotesManager.instance.time - (time + duration)) > perfectOffsetTime
                         || (NotesManager.instance.time > time && NotesManager.instance.time < (time + duration)))
 
                     {
                         result = InputResult.PENDING;
-                        OnPerfect();
+                        OnPerfect(result);
                         pressTime = NotesManager.instance.time;
                         //Debug.Log($"Note Result PERFECT: {time}, {id}");
                     }
@@ -123,14 +176,27 @@ public class NotesManager : MonoBehaviour
             if (ev == InputEvent.RELEASED && result == InputResult.PENDING)
             {
                 pressedDuration = NotesManager.instance.time - pressTime;
-                if ((pressedDuration / duration) > perfromPercent)
+                var currPerformPercent = pressedDuration / duration;
+                if (currPerformPercent >= perfectPercent)
                 {
                     result = InputResult.PERFECT;
-                    OnPerfect();
+                }
+                else if (currPerformPercent >= goodPercent)
+                {
+                    result = InputResult.GOOD;
+                }
+                else if (currPerformPercent >= successPercent)
+                {
+                    result = InputResult.SUCCESS;
                 }
                 else
                 {
                     result = InputResult.FAILED;
+                }
+
+                if (result != InputResult.FAILED)
+                {
+                    OnPerfect(result);
                 }
             }
 
@@ -143,18 +209,18 @@ public class NotesManager : MonoBehaviour
             {
                 //if (noteObject.transform.position.x + duration * 2 < 0)
 
-                if (NotesManager.instance.time - (time + duration) > offsetTime)
+                if (NotesManager.instance.time - (time + duration) > perfectOffsetTime)
                 {
-                    pressedDuration = NotesManager.instance.time - pressTime;
-                    if ((pressedDuration / duration) > perfromPercent)
-                    {
-                        result = InputResult.PERFECT;
-                        OnPerfect();
-                    }
-                    else
+                    //pressedDuration = NotesManager.instance.time - pressTime;
+                    //if ((pressedDuration / duration) > perfromPercent)
+                    //{
+                    //    result = InputResult.PERFECT;
+                    //    OnPerfect(result);
+                    //}
+                    //else
                     {
                         result = InputResult.FAILED;
-                        Debug.Log($"Note Result FAILED: {time}, {id}");
+                        LogResult();
                     }
                 }
             }
@@ -164,7 +230,10 @@ public class NotesManager : MonoBehaviour
 
     class MutiClickNote : Note
     {
-        public int clickCount = 1;
+        public int perfectClickCount = 1;
+        public int goodClickCount = 1;
+        public int successClickCount = 1;
+
         public float duration = 1;
         public int clickedCount = 0;
 
@@ -172,55 +241,49 @@ public class NotesManager : MonoBehaviour
         {
             if (ev == InputEvent.PRESSED)
             {
-                if (result == InputResult.NONE)
+                if (result == InputResult.NONE || result == InputResult.PENDING)
                 {
-                    if (Mathf.Abs(NotesManager.instance.time - time) > offsetTime
-                        || Mathf.Abs(NotesManager.instance.time - (time + duration)) > offsetTime
+                    if (Mathf.Abs(NotesManager.instance.time - time) > perfectOffsetTime
+                        || Mathf.Abs(NotesManager.instance.time - (time + duration)) > perfectOffsetTime
                         || (NotesManager.instance.time > time && NotesManager.instance.time < (time + duration)))
                     {
                         clickedCount++;
-                        OnPerfect();
-                        Debug.Log($"MutiClickNote performed:{clickedCount}, time:{NotesManager.instance.time}");
-                        if (clickedCount >= clickCount)
+                        //Debug.Log($"MutiClickNote performed:{clickedCount}, time:{NotesManager.instance.time}");
+                        if (clickedCount >= perfectClickCount)
                         {
                             result = InputResult.PERFECT;
+                        }
+                        else if (clickedCount >= goodClickCount)
+                        {
+                            result = InputResult.GOOD;
+                        }
+                        else if (clickedCount >= successClickCount)
+                        {
+                            result = InputResult.SUCCESS;
                         }
                         else
                         {
                             result = InputResult.PENDING;
                         }
 
+                        OnPerfect(result);
+                        if (result == InputResult.PENDING)
+                        {
+                            Debug.Log($"MutiClickNote performed:{clickedCount}, time:{NotesManager.instance.time}");
+                        }
+                        else
+                        {
+                            LogResult();
+                        }
                     }
                     else
                     {
                         result = InputResult.NONE;
                     }
                 }
-                else if (result == InputResult.PENDING)
-                {
-                    if (Mathf.Abs(NotesManager.instance.time - time) > offsetTime
-                        || Mathf.Abs(NotesManager.instance.time - (time + duration)) > offsetTime
-                        || (NotesManager.instance.time > time && NotesManager.instance.time < (time + duration)))
-                    {
-                        clickedCount++;
-                        OnPerfect();
-                        Debug.Log($"MutiClickNote performed:{clickedCount}, time:{NotesManager.instance.time}");
-                        if (clickedCount >= clickCount)
-                        {
-                            result = InputResult.PERFECT;
-                        }
-                        else
-                        {
-                            result = InputResult.PENDING;
-                        }
-                    }
-                }
 
             }
             return result;
-
-
-            //return base.OnInput(ev);
         }
 
         public override InputResult Update()
@@ -228,16 +291,23 @@ public class NotesManager : MonoBehaviour
             if (result == InputResult.PENDING || result == InputResult.NONE)
             {
                 //if (noteObject.transform.position.x + duration * 2 < 0)
-                if (NotesManager.instance.time - (time + duration) > offsetTime)
+                if (NotesManager.instance.time - (time + duration) > perfectOffsetTime)
                 {
-                    if (clickedCount < clickCount)
+                    if (clickedCount >= perfectClickCount)
                     {
-                        result = InputResult.FAILED;
-                        Debug.Log($"Note Result FAILED: {time}, {id}");
+                        result = InputResult.PERFECT;
+                    }
+                    else if (clickedCount >= goodClickCount)
+                    {
+                        result = InputResult.GOOD;
+                    }
+                    else if (clickedCount >= successClickCount)
+                    {
+                        result = InputResult.SUCCESS;
                     }
                     else
                     {
-                        result = InputResult.PERFECT;
+                        result = InputResult.FAILED;
                     }
                 }
             }
@@ -254,7 +324,7 @@ public class NotesManager : MonoBehaviour
     class NoteTrack
     {
 
-        public Action OnPerfect;
+        public Action<InputResult> OnPerfect;
 
         Queue<Note> notes = new Queue<Note>();
         public void Update()
@@ -268,16 +338,26 @@ public class NotesManager : MonoBehaviour
                 if (result != InputResult.NONE && result != InputResult.PENDING)
                 {
                     notes.Dequeue();
+
+                    if (result != InputResult.FAILED)
+                    {
+                        GameObject.Destroy(note.noteObject);
+                        if (result != originResult)
+                        {
+                            OnPerfect(result);
+                        }
+                    }
+
                 }
 
-                if (result == InputResult.PERFECT)
-                {
-                    GameObject.Destroy(note.noteObject);
-                    if (result != originResult)
-                    {
-                        OnPerfect();
-                    }
-                }
+                //if (result == InputResult.PERFECT)
+                //{
+                //    GameObject.Destroy(note.noteObject);
+                //    if (result != originResult)
+                //    {
+                //        OnPerfect(result);
+                //    }
+                //}
             }
         }
 
@@ -347,7 +427,7 @@ public class NotesManager : MonoBehaviour
     public float time => Time.realtimeSinceStartup - startTime;
 
     [SerializeField]
-    Button startGame; 
+    Button startGame;
 
     [SerializeField]
     Button restartGame;
@@ -358,20 +438,23 @@ public class NotesManager : MonoBehaviour
     [SerializeField]
     ParticleSystem rightPerfectFx;
 
-    void OnLeftPerfect()
+    void OnLeftPerfect(InputResult result)
     {
         leftPerfectFx.Play();
+        OnPerfect(result);
     }
 
-    void OnRightPerfect()
+    void OnRightPerfect(InputResult result)
     {
         rightPerfectFx.Play();
+        OnPerfect(result);
     }
 
 
 
     public void StartGame()
     {
+        totalScore = 0;
         if (startGame != null)
         {
             startGame.gameObject.SetActive(false);
@@ -398,13 +481,21 @@ public class NotesManager : MonoBehaviour
 
     Note CreateNoteInstance(object so, Transform track)
     {
-        if (so is MuseNoteMarker)
+        if (so is MuseClickNote)
         {
-            MuseNoteMarker n = so as MuseNoteMarker;
+            MuseClickNote n = so as MuseClickNote;
             var note = GameObject.Instantiate(clickNotePrefab, track);
             note.transform.localPosition = Vector3.right * (float)n.time * _unitPerSecond;
 
-            return new Note() { noteObject = note, time = (float)n.time, id = n.guid };
+            return new Note()
+            {
+                noteObject = note,
+                time = (float)n.time,
+                id = n.guid,
+                perfectOffsetTime = n.successOffsetTime,
+                goodOffsetTime = n.goodOffsetTime,
+                successOffsetTime = n.successOffsetTime,
+            };
         }
         else if (so is TimelineClip)
         {
@@ -421,7 +512,9 @@ public class NotesManager : MonoBehaviour
                     noteObject = note,
                     time = (float)tc.start,
                     duration = (float)tc.duration,
-                    clickCount = n.clickCount,
+                    perfectClickCount = n.perfectClickCount,
+                    goodClickCount = n.goodClickCount,
+                    successClickCount = n.successClickCount,
                     id = n.guid,
                 };
             }
@@ -438,7 +531,9 @@ public class NotesManager : MonoBehaviour
                     noteObject = note,
                     time = (float)tc.start,
                     duration = (float)tc.duration,
-                    perfromPercent = n.performPercent,
+                    perfectPercent = n.perfectPercent,
+                    goodPercent = n.goodPercent,
+                    successPercent = n.successPercent,
                     id = n.guid,
                 };
             }

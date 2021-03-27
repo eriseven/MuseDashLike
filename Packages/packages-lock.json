@@ -37,6 +37,14 @@
       "dependencies": {},
       "url": "https://packages.unity.cn"
     },
+    "com.unity.project-auditor": {
+      "version": "file:ProjectAuditor",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "nuget.mono-cecil": "0.1.6-preview"
+      }
+    },
     "com.unity.test-framework": {
       "version": "1.1.19",
       "depth": 0,
@@ -72,6 +80,13 @@
         "com.unity.modules.ui": "1.0.0",
         "com.unity.modules.imgui": "1.0.0"
       }
+    },
+    "nuget.mono-cecil": {
+      "version": "0.1.6-preview",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.cn"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",
