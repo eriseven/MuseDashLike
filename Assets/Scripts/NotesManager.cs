@@ -77,7 +77,7 @@ public class NotesManager : MonoBehaviour
 
     class Note
     {
-        public Action<InputResult> OnPerfect;
+        public Action<InputResult> OnPerfect = delegate { };
         public GameObject noteObject;
         public string id;
         public float time;
@@ -156,7 +156,7 @@ public class NotesManager : MonoBehaviour
         public void NotifyFinalResult(InputResult result)
         {
             this.result = result;
-            if (result != InputResult.NONE || result != InputResult.FAILED || result != InputResult.PENDING)
+            if (result != InputResult.NONE && result != InputResult.FAILED && result != InputResult.PENDING)
             {
                 OnPerfect(result);
                 LogResult();
@@ -205,12 +205,12 @@ public class NotesManager : MonoBehaviour
                 LogResult();
             }
 
-            if (_pendingResult != InputResult.NONE || _pendingResult != InputResult.FAILED || _pendingResult != InputResult.PENDING)
+            if (_pendingResult != InputResult.NONE && _pendingResult != InputResult.FAILED && _pendingResult != InputResult.PENDING)
             {
                 if (slaveNote != null)
                 {
                     var _slaveResult = slaveNote.pendingResult;
-                    if (_slaveResult != InputResult.NONE || _slaveResult != InputResult.FAILED || _slaveResult != InputResult.PENDING)
+                    if (_slaveResult != InputResult.NONE && _slaveResult != InputResult.FAILED && _slaveResult != InputResult.PENDING)
                     {
                         result = (InputResult)Math.Max((int)_pendingResult, (int)_slaveResult);
                         LogResult();
@@ -690,11 +690,14 @@ public class NotesManager : MonoBehaviour
         tempNotesList = tempNotesList.OrderBy(x => x.time).ToList();
         foreach (var m in tempNotesList)
         {
+            m.noteObject.transform.SetParent(this.leftTrack);
+            m.noteObject.transform.localPosition = Vector3.right * (float)m.time * _unitPerSecond;
+
             this.tracks[0].AddNote(m);
         }
 
 
-        var slaveNotes = tempNotesList.Where(x => x is DoubleClickNote).Select(x => ((DoubleClickNote)x).slaveNote);
+        var slaveNotes = tempNotesList.Where(x => x is DoubleClickNote).Select(x => ((DoubleClickNote)x).slaveNote).ToArray();
 
         var rightTrack = tracks[1];
         var rightNotes = rightTrack.GetMarkers();
@@ -721,6 +724,8 @@ public class NotesManager : MonoBehaviour
         tempNotesList = tempNotesList.OrderBy(x => x.time).ToList();
         foreach (var m in tempNotesList)
         {
+            m.noteObject.transform.SetParent(this.rightTrack);
+            m.noteObject.transform.localPosition = Vector3.right * (float)m.time * _unitPerSecond;
             this.tracks[1].AddNote(m);
         }
     }
