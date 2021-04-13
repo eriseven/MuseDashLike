@@ -281,9 +281,9 @@ MonoBehaviour:
   gameLevel: {fileID: 11400000, guid: cceccf2d28a4c4044bf3fa9fe8443b61, type: 2}
   clickNotePrefab: {fileID: 8024561498541442583, guid: 57f85868071b6c746898fe2d72a9582b,
     type: 3}
-  multiClickNotePrefab: {fileID: 8280585060127348109, guid: 180cc463c37805f458e2cda202b162b2,
+  multiClickNotePrefab: {fileID: 650900063401986643, guid: c3177a4e6ac29bb488d18fd52a625ad6,
     type: 3}
-  longClickNotePrefab: {fileID: 8280585060127348109, guid: 72d68c36defee244aaedeaa81e41c3ee,
+  longClickNotePrefab: {fileID: 650900063401986643, guid: 0a585693db52f7b4aa13f0dd3db97f32,
     type: 3}
   trackRoot: {fileID: 206174451}
   leftTrack: {fileID: 1358315512}
@@ -296,7 +296,7 @@ MonoBehaviour:
       draggable: 1
       expandable: 1
       multipleSelection: 1
-      isExpanded: 0
+      isExpanded: 1
       label:
         m_Text: Keys
         m_Image: {fileID: 0}
@@ -311,7 +311,7 @@ MonoBehaviour:
       elementNameOverride: 
       elementIcon: {fileID: 0}
     reqReferences: {fileID: 0}
-    isExpanded: 0
+    isExpanded: 1
     _keyValues: 010000000200000003000000
     _keys: 010000000200000003000000
     _values: 0a0000000800000005000000
@@ -2685,7 +2685,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2113764360
 Transform:
   m_ObjectHideFlags: 0
@@ -2778,7 +2778,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2139450870
 Transform:
   m_ObjectHideFlags: 0
