@@ -620,9 +620,11 @@ public class NotesManager : MonoBehaviour
             if (tc.asset is MuseMultiClickNote)
             {
                 var n = tc.asset as MuseMultiClickNote;
-                var note = GameObject.Instantiate(multiClickNotePrefab, track);
-                note.transform.localPosition = Vector3.right * (float)tc.start * _unitPerSecond;
-                note.transform.localScale = new Vector3(1 * (float)tc.duration * _unitPerSecond, 1, 1);
+                var note = Instantiate(multiClickNotePrefab, track);
+                
+                note.GetComponent<LongNoteRenderer>().InitNote(Vector3.right * (float)tc.start * _unitPerSecond, (float)tc.duration * _unitPerSecond);
+                // note.transform.localPosition = Vector3.right * (float)tc.start * _unitPerSecond;
+                // note.transform.localScale = new Vector3(1 * (float)tc.duration * _unitPerSecond, 1, 1);
 
                 return new MutiClickNote()
                 {
@@ -638,9 +640,10 @@ public class NotesManager : MonoBehaviour
             else if (tc.asset is MuseLongClickNote)
             {
                 var n = tc.asset as MuseLongClickNote;
-                var note = GameObject.Instantiate(longClickNotePrefab, track);
-                note.transform.localPosition = Vector3.right * (float)tc.start * _unitPerSecond;
-                note.transform.localScale = new Vector3(1 * (float)tc.duration * _unitPerSecond, 1, 1);
+                var note = Instantiate(longClickNotePrefab, track);
+                note.GetComponent<LongNoteRenderer>().InitNote(Vector3.right * (float)tc.start * _unitPerSecond, (float)tc.duration * _unitPerSecond);
+                // note.transform.localPosition = Vector3.right * (float)tc.start * _unitPerSecond;
+                // note.transform.localScale = new Vector3(1 * (float)tc.duration * _unitPerSecond, 1, 1);
 
 
                 return new LongClickNote()
