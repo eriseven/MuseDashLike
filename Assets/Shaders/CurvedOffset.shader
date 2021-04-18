@@ -1,4 +1,4 @@
-﻿Shader "Unlit/Curved"
+﻿Shader "Unlit/Curved Offset"
 {
     Properties
     {
@@ -49,13 +49,19 @@
 				UNITY_SETUP_INSTANCE_ID(v);
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 				float4 vPos = mul (UNITY_MATRIX_MV, v.vertex);
-				float zOff = vPos.z/_What;
+
+				float4 vOffset = mul(UNITY_MATRIX_MV, float4(0,0,0,1));
+
+				float zOff = vOffset.z/_What;
 
 
-                vPos -= float4(15 * sign(vPos.x), 15 * sign(vPos.y + 4), 0, 0)*zOff*zOff;
-                
+                vOffset -= float4(15 * sign(vOffset.x), 15 * sign(vOffset.y + 4), 0, 0)*zOff*zOff;
+				vPos += float4(vOffset.x, vOffset.y, 0, 0);
                 // o.vertex = UnityObjectToClipPos(v.vertex);
-                o.vertex = mul (UNITY_MATRIX_P, vPos);//vPos;
+				// vOffset = mul(UNITY_MATRIX_P, vOffset);
+				o.vertex = mul(UNITY_MATRIX_P, vPos);//vPos;
+
+
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                 return o;
             }
