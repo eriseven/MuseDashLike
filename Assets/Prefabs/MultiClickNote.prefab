@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 650900063401986642}
   - component: {fileID: 4110281646145970306}
   m_Layer: 0
-  m_Name: MultiClickNote
+  m_Name: LongClickNote
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -248,6 +248,15 @@ LineRenderer:
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
+  - {x: 0.1, y: 0, z: 0}
+  - {x: 0.2, y: 0, z: 0}
+  - {x: 0.3, y: 0, z: 0}
+  - {x: 0.4, y: 0, z: 0}
+  - {x: 0.5, y: 0, z: 0}
+  - {x: 0.6, y: 0, z: 0}
+  - {x: 0.7, y: 0, z: 0}
+  - {x: 0.8, y: 0, z: 0}
+  - {x: 0.9, y: 0, z: 0}
   - {x: 1, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3

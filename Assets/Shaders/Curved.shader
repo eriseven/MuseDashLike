@@ -49,10 +49,11 @@
 				UNITY_SETUP_INSTANCE_ID(v);
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 				float4 vPos = mul (UNITY_MATRIX_MV, v.vertex);
-				float zOff = vPos.z/_What;
+				float zOff = clamp(vPos.z/_What, -10000, 0);
 
-
-                vPos -= float4(15 * sign(vPos.x), 15 * sign(vPos.y + 4), 0, 0)*zOff*zOff;
+                // vPos -= float4(15 * sign(vPos.x), 15 * sign(vPos.y + 4), 0, 0)*zOff*zOff;
+                
+                vPos -= float4(15 * sign(vPos.x), 0, 0, 0)*zOff*zOff;
                 
                 // o.vertex = UnityObjectToClipPos(v.vertex);
                 o.vertex = mul (UNITY_MATRIX_P, vPos);//vPos;

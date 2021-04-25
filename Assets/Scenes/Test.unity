@@ -281,7 +281,7 @@ MonoBehaviour:
   gameLevel: {fileID: 11400000, guid: cceccf2d28a4c4044bf3fa9fe8443b61, type: 2}
   clickNotePrefab: {fileID: 8024561498541442583, guid: 57f85868071b6c746898fe2d72a9582b,
     type: 3}
-  multiClickNotePrefab: {fileID: 650900063401986643, guid: d84da1f304283904eadb2fdeb5c51769,
+  multiClickNotePrefab: {fileID: 650900063401986643, guid: a4998d2159bfb66449bd01ffc691df5f,
     type: 3}
   longClickNotePrefab: {fileID: 650900063401986643, guid: 0a585693db52f7b4aa13f0dd3db97f32,
     type: 3}
@@ -699,6 +699,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 139313516412094374, guid: 5b345abb3f2d8634f86fe16cf6007257,
         type: 3}
+      propertyPath: far clip plane
+      value: 140
+      objectReference: {fileID: 0}
+    - target: {fileID: 139313516412094374, guid: 5b345abb3f2d8634f86fe16cf6007257,
+        type: 3}
       propertyPath: m_BackGroundColor.b
       value: 0.8301887
       objectReference: {fileID: 0}
@@ -711,11 +716,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_BackGroundColor.r
       value: 0.7871129
-      objectReference: {fileID: 0}
-    - target: {fileID: 139313516412094374, guid: 5b345abb3f2d8634f86fe16cf6007257,
-        type: 3}
-      propertyPath: far clip plane
-      value: 140
       objectReference: {fileID: 0}
     - target: {fileID: 139313516412094375, guid: 5b345abb3f2d8634f86fe16cf6007257,
         type: 3}
@@ -1693,7 +1693,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -400, y: -290}
+  m_AnchoredPosition: {x: -330, y: -290}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1422355962
@@ -2432,7 +2432,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 400, y: -290}
+  m_AnchoredPosition: {x: 330, y: -290}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2006203973
