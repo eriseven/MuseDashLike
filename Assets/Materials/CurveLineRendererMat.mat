@@ -71,7 +71,11 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _What: 58.5
+    - _What: 300
+    - _XCurveFact: 51.8
+    - _YCurveFact: 15
+    - _YOffset: 0
+    - _ZOffset: -136.2
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}

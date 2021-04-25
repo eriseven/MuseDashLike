@@ -4,6 +4,7 @@
     {
         _MainTex ("Texture", 2D) = "white" {}
         _What("what",float) = 200
+		_YOffset("Y Offset", float) = 0
     }
     SubShader
     {
@@ -41,6 +42,7 @@
             float4 _MainTex_ST;
 
             float _What;
+			float _YOffset;
             
             v2f vert (appdata v)
             {

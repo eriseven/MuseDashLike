@@ -4,6 +4,10 @@
     {
         _MainTex ("Texture", 2D) = "white" {}
         _What("what",float) = 200
+		_YOffset("Y Offset", float) = 0
+		_ZOffset("Z Offset", float) = 0
+		_XCurveFact("X Curve", float) = 15 
+		_YCurveFact("Y Curve", float) = 15 
     }
     SubShader
     {
@@ -41,6 +45,9 @@
             float4 _MainTex_ST;
 
             float _What;
+			float _YOffset;
+			float _ZOffset;
+			float _XCurveFact;
             
             v2f vert (appdata v)
             {
@@ -49,11 +56,14 @@
 				UNITY_SETUP_INSTANCE_ID(v);
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 				float4 vPos = mul (UNITY_MATRIX_MV, v.vertex);
-				float zOff = clamp(vPos.z/_What, -10000, 0);
+				float zOff = max (vPos.z - _ZOffset, 0);
+
+				zOff = zOff/_What;
+
 
                 // vPos -= float4(15 * sign(vPos.x), 15 * sign(vPos.y + 4), 0, 0)*zOff*zOff;
                 
-                vPos -= float4(15 * sign(vPos.x), 0, 0, 0)*zOff*zOff;
+                vPos -= float4(_XCurveFact * sign(vPos.x), 0, 0, 0)*zOff*zOff;
                 
                 // o.vertex = UnityObjectToClipPos(v.vertex);
                 o.vertex = mul (UNITY_MATRIX_P, vPos);//vPos;
