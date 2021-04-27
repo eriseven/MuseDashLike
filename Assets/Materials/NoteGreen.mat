@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: NoteGreen
   m_Shader: {fileID: 4800000, guid: 8cb5890d6257ea440bba6d681122591f, type: 3}
-  m_ShaderKeywords: _ALPHAPREMULTIPLY_ON
+  m_ShaderKeywords: 
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -88,6 +88,10 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _What: 300
+    - _XCurveFact: 67.1
+    - _YCurveFact: 15
+    - _YOffset: 0
+    - _ZOffset: 51.23
     - _ZWrite: 0
     m_Colors:
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
