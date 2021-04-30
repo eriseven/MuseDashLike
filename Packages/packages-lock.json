@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.litefeel.bitmapfontimporter": {
+      "version": "https://github.com/litefeel/Unity-BitmapFontImporter.git#3.2.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "c263d6766fe306596adabda683f858386fa6ca2f"
+    },
     "com.unity.collab-proxy": {
       "version": "1.2.16",
       "depth": 0,
