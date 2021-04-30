@@ -72,6 +72,10 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _What: 300
+    - _XCurveFact: 67.1
+    - _YCurveFact: 15
+    - _YOffset: 6.71
+    - _ZOffset: 51.23
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 0.20392154, g: 0.48136148, b: 0.9607843, a: 1}

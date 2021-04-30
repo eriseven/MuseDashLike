@@ -90,7 +90,7 @@ Material:
     - _What: 300
     - _XCurveFact: 67.1
     - _YCurveFact: 15
-    - _YOffset: 0
+    - _YOffset: 6.71
     - _ZOffset: 51.23
     - _ZWrite: 0
     m_Colors:

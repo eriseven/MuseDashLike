@@ -63,7 +63,7 @@
 
                 // vPos -= float4(15 * sign(vPos.x), 15 * sign(vPos.y + 4), 0, 0)*zOff*zOff;
                 
-                vPos -= float4(_XCurveFact * sign(vPos.x - 10), _YOffset*100*zOff*zOff, 0, 0)*zOff*zOff;
+                vPos -= float4(_XCurveFact * sign(vPos.x), _YOffset*100*zOff*zOff, 0, 0)*zOff*zOff;
                 
                 // o.vertex = UnityObjectToClipPos(v.vertex);
                 o.vertex = mul (UNITY_MATRIX_P, vPos);//vPos;
