@@ -34,7 +34,10 @@ public class NotesManager : MonoBehaviour
     Transform rightTrack;
 
     [SerializeField]
-    TextMeshProUGUI scoreLable;
+    Text scoreLable;
+    // TextMeshProUGUI scoreLable;
+    
+    
 
 
     public enum InputEvent

@@ -5,7 +5,7 @@
   <pages>
     <page id="0" file="live_score_num_0.png" />
   </pages>
-  <chars count="9">
+  <chars count="10">
     <char id="48" x="0" y="0" width="32" height="34" xoffset="0" yoffset="0" xadvance="32" page="0" chnl="15" />
     <char id="49" x="33" y="0" width="32" height="34" xoffset="0" yoffset="0" xadvance="32" page="0" chnl="15" />
     <char id="50" x="66" y="0" width="32" height="34" xoffset="0" yoffset="0" xadvance="32" page="0" chnl="15" />
@@ -15,5 +15,6 @@
     <char id="54" x="198" y="0" width="32" height="34" xoffset="0" yoffset="0" xadvance="32" page="0" chnl="15" />
     <char id="55" x="0" y="35" width="32" height="34" xoffset="0" yoffset="0" xadvance="32" page="0" chnl="15" />
     <char id="56" x="33" y="35" width="32" height="34" xoffset="0" yoffset="0" xadvance="32" page="0" chnl="15" />
+    <char id="57" x="66" y="35" width="32" height="34" xoffset="0" yoffset="0" xadvance="32" page="0" chnl="15" />
   </chars>
 </font>
