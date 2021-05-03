@@ -35,9 +35,14 @@ public class NotesManager : MonoBehaviour
 
     [SerializeField]
     Text scoreLable;
-    // TextMeshProUGUI scoreLable;
-    
-    
+
+    [SerializeField] Sprite resultGood;
+    [SerializeField] Sprite resultGreat;
+    [SerializeField] Sprite resultPerfect;
+    [SerializeField] Sprite resultMiss;
+
+    [SerializeField]
+    Image resultImg;
 
 
     public enum InputEvent
@@ -61,21 +66,45 @@ public class NotesManager : MonoBehaviour
 
     void OnPerfect(InputResult result)
     {
-        int score = 0;
-        scoreConfig.TryGetValue(result, out score);
-        totalScore += score;
-
-        Debug.Log($"Get Score:{score}, Total Score:{totalScore}");
-        if (scoreLable != null)
+        if (scoreConfig.TryGetValue(result, out var setting))
         {
-            scoreLable.text = totalScore.ToString();
+            int score = setting.score;
+            totalScore += score;
+
+            Debug.Log($"Get Score:{score}, Total Score:{totalScore}");
+            if (scoreLable != null)
+            {
+                scoreLable.text = totalScore.ToString();
+            }
+
+            var sp = setting.sprite;
+            if (sp == null)
+            {
+                resultImg.enabled = false;
+            }
+            else
+            {
+                resultImg.sprite = sp;
+                resultImg.SetNativeSize();
+                resultImg.enabled = true;
+            }
+
         }
+
     }
 
     [Serializable]
-    public class PerformScoreConfig : SerializableDictionaryBase<InputResult, int> { }
+    public class PerformScore
+    {
+        public int score;
+        public Sprite sprite;
+    }
+
+    [Serializable]
+    public class PerformScoreConfig : SerializableDictionaryBase<InputResult, PerformScore> { }
 
     public PerformScoreConfig scoreConfig;
+
 
 
     class Note
@@ -239,7 +268,7 @@ public class NotesManager : MonoBehaviour
         public override InputResult OnInput(InputEvent ev)
         {
 
-            if (result == InputResult.PENDING || result == InputResult.NONE)
+            if (result == InputResult.NONE)
             {
                 if (ev == InputEvent.PRESSED)
                 {
@@ -281,7 +310,7 @@ public class NotesManager : MonoBehaviour
                     result = InputResult.FAILED;
                 }
 
-                if (result != InputResult.FAILED)
+                //if (result != InputResult.FAILED)
                 {
                     OnPerfect(result);
                 }
@@ -307,6 +336,7 @@ public class NotesManager : MonoBehaviour
                     //else
                     {
                         result = InputResult.FAILED;
+                        OnPerfect(result);
                         LogResult();
                     }
                 }
@@ -426,7 +456,7 @@ public class NotesManager : MonoBehaviour
                 {
                     notes.Dequeue();
 
-                    if (result != InputResult.FAILED)
+                    if (result != InputResult.FAILED || result != InputResult.PENDING)
                     {
                         GameObject.Destroy(note.noteObject);
                         if (result != originResult)
@@ -523,17 +553,55 @@ public class NotesManager : MonoBehaviour
     ParticleSystem leftPerfectFx;
 
     [SerializeField]
+    ParticleSystem leftPendingFx;
+
+
+
+    [SerializeField]
     ParticleSystem rightPerfectFx;
+
+    [SerializeField]
+    ParticleSystem rightPendingFx;
+
+
 
     void OnLeftPerfect(InputResult result)
     {
-        leftPerfectFx.Play();
+        if (result != InputResult.PENDING && result != InputResult.NONE && result != InputResult.FAILED)
+        {
+
+            leftPendingFx.Stop();
+            leftPerfectFx.Play();
+        }
+        else if (result == InputResult.PENDING)
+        {
+            leftPendingFx.Play();
+        }
+        else if (result == InputResult.FAILED)
+        {
+            leftPendingFx.Stop();
+        }
+
         OnPerfect(result);
     }
 
     void OnRightPerfect(InputResult result)
     {
-        rightPerfectFx.Play();
+        if (result != InputResult.PENDING && result != InputResult.NONE && result != InputResult.FAILED)
+        {
+            rightPendingFx.Stop();
+            rightPerfectFx.Play();
+        }
+        else if (result == InputResult.PENDING)
+        {
+            rightPendingFx.Play();
+        }
+        else if (result == InputResult.FAILED)
+        {
+            rightPendingFx.Stop();
+        }
+
+
         OnPerfect(result);
     }
 
@@ -624,7 +692,7 @@ public class NotesManager : MonoBehaviour
             {
                 var n = tc.asset as MuseMultiClickNote;
                 var note = Instantiate(multiClickNotePrefab, track);
-                
+
                 note.GetComponent<LongNoteRenderer>().InitNote(Vector3.right * (float)tc.start * _unitPerSecond, (float)tc.duration * _unitPerSecond);
                 // note.transform.localPosition = Vector3.right * (float)tc.start * _unitPerSecond;
                 // note.transform.localScale = new Vector3(1 * (float)tc.duration * _unitPerSecond, 1, 1);
