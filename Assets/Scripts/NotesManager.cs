@@ -319,10 +319,34 @@ public class NotesManager : MonoBehaviour
             return result;
         }
 
+        Vector3 position
+        {
+            get
+            {
+                return Vector3.right * Mathf.Max(NotesManager.instance.time, time) * NotesManager.instance.unitPerSecond;
+            }
+        }
+
+        float length
+        {
+            get
+            {
+                return (duration - Mathf.Clamp(Mathf.Max(NotesManager.instance.time, time) - time, 0, duration)) * NotesManager.instance.unitPerSecond;
+            }
+        }
+
         public override InputResult Update()
         {
             if (result == InputResult.PENDING || result == InputResult.NONE)
             {
+                if (result == InputResult.PENDING)
+                {
+                    noteObject.GetComponent<LongNoteRenderer>().UpdateState(position
+                        , length);
+
+                    //note.GetComponent<LongNoteRenderer>().InitNote(Vector3.right * (float)tc.start * unitPerSecond, (float)tc.duration * unitPerSecond);
+                }
+
                 //if (noteObject.transform.position.x + duration * 2 < 0)
 
                 if (NotesManager.instance.time - (time + duration) > perfectOffsetTime)
@@ -693,7 +717,7 @@ public class NotesManager : MonoBehaviour
                 var n = tc.asset as MuseMultiClickNote;
                 var note = Instantiate(multiClickNotePrefab, track);
 
-                note.GetComponent<LongNoteRenderer>().InitNote(Vector3.right * (float)tc.start * _unitPerSecond, (float)tc.duration * _unitPerSecond);
+                note.GetComponent<LongNoteRenderer>().InitNote(Vector3.right * (float)tc.start * unitPerSecond, (float)tc.duration * unitPerSecond);
                 // note.transform.localPosition = Vector3.right * (float)tc.start * _unitPerSecond;
                 // note.transform.localScale = new Vector3(1 * (float)tc.duration * _unitPerSecond, 1, 1);
 
@@ -712,7 +736,7 @@ public class NotesManager : MonoBehaviour
             {
                 var n = tc.asset as MuseLongClickNote;
                 var note = Instantiate(longClickNotePrefab, track);
-                note.GetComponent<LongNoteRenderer>().InitNote(Vector3.right * (float)tc.start * _unitPerSecond, (float)tc.duration * _unitPerSecond);
+                note.GetComponent<LongNoteRenderer>().InitNote(Vector3.right * (float)tc.start * unitPerSecond, (float)tc.duration * unitPerSecond);
                 // note.transform.localPosition = Vector3.right * (float)tc.start * _unitPerSecond;
                 // note.transform.localScale = new Vector3(1 * (float)tc.duration * _unitPerSecond, 1, 1);
 

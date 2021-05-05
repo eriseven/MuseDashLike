@@ -15,18 +15,29 @@ public class LongNoteRenderer : MonoBehaviour
 
     [SerializeField] private GameObject notePrefab;
 
+
+    GameObject noteBegin;
+    GameObject noteEnd;
     public void InitNote(Vector3 position, float duration)
     {
         // var note = GameObject.Instantiate(longClickNotePrefab, track);
         transform.localPosition = position;
         lineRenderer.transform.localScale = new Vector3(duration, 1, 1);
-        var noteBegin = Instantiate(notePrefab, transform);
+        noteBegin = Instantiate(notePrefab, transform);
         noteBegin.transform.position = origin.transform.position;
-        
-        var noteEnd= Instantiate(notePrefab, transform);
+
+        noteEnd = Instantiate(notePrefab, transform);
         noteEnd.transform.position = destination.transform.position;
     }
-    
+
+    public void UpdateState(Vector3 position, float duration)
+    {
+        transform.localPosition = position;
+        lineRenderer.transform.localScale = new Vector3(duration, 1, 1);
+        noteBegin.transform.position = origin.transform.position;
+        noteEnd.transform.position = destination.transform.position;
+    }
+
     private void _Awake()
     {
         // if (lineRenderer == null)
