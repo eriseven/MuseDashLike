@@ -36,14 +36,19 @@ public class NotesManager : MonoBehaviour
     [SerializeField]
     Text scoreLable;
 
+    [SerializeField]
+    Text comboLable;
+
     [SerializeField] Sprite resultGood;
     [SerializeField] Sprite resultGreat;
     [SerializeField] Sprite resultPerfect;
     [SerializeField] Sprite resultMiss;
 
     [SerializeField]
-    Image resultImg;
+    ResultImage resultImg;
 
+    [SerializeField]
+    Canvas uiCanvas;
 
     public enum InputEvent
     {
@@ -63,6 +68,7 @@ public class NotesManager : MonoBehaviour
 
 
     int totalScore = 0;
+    int comboCount = 0;
 
     void OnPerfect(InputResult result)
     {
@@ -78,17 +84,27 @@ public class NotesManager : MonoBehaviour
             }
 
             var sp = setting.sprite;
-            if (sp == null)
-            {
-                resultImg.enabled = false;
-            }
-            else
-            {
-                resultImg.sprite = sp;
-                resultImg.SetNativeSize();
-                resultImg.enabled = true;
-            }
+            resultImg.sprite = sp;
+        }
 
+        if (result == InputResult.GOOD || result == InputResult.SUCCESS || result == InputResult.PERFECT)
+        {
+            comboCount++;
+        }
+
+        if (result == InputResult.FAILED)
+        {
+            comboCount = 0;
+        }
+
+        if (comboCount > 0)
+        {
+            comboLable.text = comboCount.ToString();
+            comboLable.gameObject.SetActive(true);
+        }
+        else
+        {
+            comboLable.gameObject.SetActive(false);
         }
 
     }
@@ -337,32 +353,18 @@ public class NotesManager : MonoBehaviour
 
         public override InputResult Update()
         {
+            noteObject.GetComponent<LongNoteRenderer>().UpdateState(position
+                , length);
+
+
             if (result == InputResult.PENDING || result == InputResult.NONE)
             {
-                if (result == InputResult.PENDING)
-                {
-                    noteObject.GetComponent<LongNoteRenderer>().UpdateState(position
-                        , length);
-
-                    //note.GetComponent<LongNoteRenderer>().InitNote(Vector3.right * (float)tc.start * unitPerSecond, (float)tc.duration * unitPerSecond);
-                }
-
-                //if (noteObject.transform.position.x + duration * 2 < 0)
 
                 if (NotesManager.instance.time - (time + duration) > perfectOffsetTime)
                 {
-                    //pressedDuration = NotesManager.instance.time - pressTime;
-                    //if ((pressedDuration / duration) > perfromPercent)
-                    //{
-                    //    result = InputResult.PERFECT;
-                    //    OnPerfect(result);
-                    //}
-                    //else
-                    {
-                        result = InputResult.FAILED;
-                        OnPerfect(result);
-                        LogResult();
-                    }
+                    result = InputResult.FAILED;
+                    OnPerfect(result);
+                    LogResult();
                 }
             }
             return result;
@@ -630,10 +632,23 @@ public class NotesManager : MonoBehaviour
     }
 
 
+    public void StartIntro()
+    {
+        if (startGame != null)
+        {
+            startGame.gameObject.SetActive(false);
+        }
+
+        trackRoot.gameObject.SetActive(true);
+        uiCanvas.GetComponent<PlayableDirector>().Play();
+    }
 
     public void StartGame()
     {
+
         totalScore = 0;
+        comboCount = 0;
+
         if (startGame != null)
         {
             startGame.gameObject.SetActive(false);
@@ -826,6 +841,8 @@ public class NotesManager : MonoBehaviour
             m.noteObject.transform.localPosition = Vector3.right * (float)m.time * _unitPerSecond;
             this.tracks[1].AddNote(m);
         }
+
+        trackRoot.gameObject.SetActive(false);
     }
 
     Vector3 trackOffset = Vector3.zero;
