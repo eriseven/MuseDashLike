@@ -857,6 +857,9 @@ public class NotesManager : MonoBehaviour
         }
     }
 
+    public void OnRNodePress() { tracks[1].OnInput(InputEvent.PRESSED); }
+    public void OnRNodeRelease() { tracks[1].OnInput(InputEvent.RELEASED); }
+    
     public void OnRNodeClick(InputAction.CallbackContext context)
     {
         if (context.started)
@@ -870,7 +873,10 @@ public class NotesManager : MonoBehaviour
         }
     }
 
-
+    public void OnLNodePress() { tracks[0].OnInput(InputEvent.PRESSED); }
+    public void OnLNodeRelease() { tracks[0].OnInput(InputEvent.RELEASED); }
+ 
+   
     public void OnLNodeClick(InputAction.CallbackContext context)
     {
         if (context.started)
