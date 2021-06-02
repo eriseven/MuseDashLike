@@ -130,9 +130,47 @@ public class NotesManager : MonoBehaviour
         public string id;
         public float time;
 
-        public float perfectOffsetTime = 0.5f;
-        public float goodOffsetTime = 0.7f;
-        public float successOffsetTime = 1f;
+        private float _perfectOffsetTime = 0.5f;
+
+        public float perfectOffsetTime
+        {
+            get
+            {
+                return _perfectOffsetTime / (NotesManager.instance.unitPerSecond / 10);
+            }
+            set
+            {
+                _perfectOffsetTime = value;
+            }
+        }
+
+        private float _goodOffsetTime = 0.7f;
+
+        public float goodOffsetTime
+        {
+            get
+            {
+                return _goodOffsetTime / (NotesManager.instance.unitPerSecond / 10);
+            }
+            set
+            {
+                _goodOffsetTime = value;
+            }
+        }
+        
+        private float _successOffsetTime = 1f;
+
+        public float successOffsetTime
+        {
+            get
+            {
+                return _successOffsetTime / (NotesManager.instance.unitPerSecond / 10);
+            }
+            set
+            {
+                _successOffsetTime = value;
+            }
+        }
 
 
         protected InputResult result = InputResult.NONE;
