@@ -66,6 +66,16 @@ public class NotesManager : MonoBehaviour
         FAILED,
     }
 
+    [SerializeField]
+    public float perfectOffsetTime = 0.1f;
+
+    [SerializeField]
+    public float goodOffsetTime = 0.14f;
+
+    [SerializeField]
+    public float successOffsetTime = 0.17f;
+
+
 
     int totalScore = 0;
     int comboCount = 0;
@@ -136,11 +146,7 @@ public class NotesManager : MonoBehaviour
         {
             get
             {
-                return _perfectOffsetTime / (NotesManager.instance.unitPerSecond / 10);
-            }
-            set
-            {
-                _perfectOffsetTime = value;
+                return NotesManager.instance.perfectOffsetTime;// / (NotesManager.instance.unitPerSecond / 10);
             }
         }
 
@@ -150,26 +156,19 @@ public class NotesManager : MonoBehaviour
         {
             get
             {
-                return _goodOffsetTime / (NotesManager.instance.unitPerSecond / 10);
-            }
-            set
-            {
-                _goodOffsetTime = value;
+                return NotesManager.instance.goodOffsetTime;// / (NotesManager.instance.unitPerSecond / 10);
             }
         }
         
-        private float _successOffsetTime = 1f;
+        private float _successOffsetTime = 1.0f;
 
         public float successOffsetTime
         {
             get
             {
-                return _successOffsetTime / (NotesManager.instance.unitPerSecond / 10);
+                return NotesManager.instance.successOffsetTime;// / (NotesManager.instance.unitPerSecond / 10);
             }
-            set
-            {
-                _successOffsetTime = value;
-            }
+
         }
 
 
@@ -179,7 +178,7 @@ public class NotesManager : MonoBehaviour
 
         protected void LogResult()
         {
-            Debug.Log($"Note Result {result.ToString()}: {time}, {id}");
+            Debug.Log($"Note Result {result.ToString()}: {time}, {NotesManager.instance.time}, {perfectOffsetTime}, {goodOffsetTime}, {successOffsetTime}, {id}");
         }
 
         protected virtual InputResult CheckResult()
@@ -614,18 +613,18 @@ public class NotesManager : MonoBehaviour
     Button restartGame;
 
     [SerializeField]
-    ParticleSystem leftPerfectFx;
+    MuseResultEffect leftPerfectFx;
 
     [SerializeField]
-    ParticleSystem leftPendingFx;
+    MuseResultEffect leftPendingFx;
 
 
 
     [SerializeField]
-    ParticleSystem rightPerfectFx;
+    MuseResultEffect rightPerfectFx;
 
     [SerializeField]
-    ParticleSystem rightPendingFx;
+    MuseResultEffect rightPendingFx;
 
 
 
@@ -724,9 +723,9 @@ public class NotesManager : MonoBehaviour
                 noteObject = note,
                 time = (float)n.time,
                 id = n.guid,
-                perfectOffsetTime = n.successOffsetTime,
-                goodOffsetTime = n.goodOffsetTime,
-                successOffsetTime = n.successOffsetTime,
+                //perfectOffsetTime = n.perfectOffsetTime,
+                //goodOffsetTime = n.goodOffsetTime,
+                //successOffsetTime = n.successOffsetTime,
             };
         }
         else if (so is MuseDoubleClickNote)
@@ -744,9 +743,9 @@ public class NotesManager : MonoBehaviour
                 time = (float)n.time,
                 id = $"slave-for{n.guid}",
                 //id = n.guid,
-                perfectOffsetTime = n.successOffsetTime,
-                goodOffsetTime = n.goodOffsetTime,
-                successOffsetTime = n.successOffsetTime,
+                //perfectOffsetTime = n.perfectOffsetTime,
+                //goodOffsetTime = n.goodOffsetTime,
+                //successOffsetTime = n.successOffsetTime,
             };
 
 
@@ -755,9 +754,9 @@ public class NotesManager : MonoBehaviour
                 noteObject = note,
                 time = (float)n.time,
                 id = n.guid,
-                perfectOffsetTime = n.successOffsetTime,
-                goodOffsetTime = n.goodOffsetTime,
-                successOffsetTime = n.successOffsetTime,
+                //perfectOffsetTime = n.perfectOffsetTime,
+                //goodOffsetTime = n.goodOffsetTime,
+                //successOffsetTime = n.successOffsetTime,
                 slaveNote = slave,
             };
 
