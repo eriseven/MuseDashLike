@@ -552,7 +552,18 @@ public class NotesManager : MonoBehaviour
             if (notes.Count > 0)
             {
                 var note = notes.Peek();
-                note.OnInput(ev);
+                var result = note.OnInput(ev);
+                
+                if (result != InputResult.NONE && result != InputResult.PENDING)
+                {
+                    notes.Dequeue();
+
+                    if (result != InputResult.FAILED || result != InputResult.PENDING)
+                    {
+                        GameObject.Destroy(note.noteObject);
+                    }
+
+                }
             }
         }
 
