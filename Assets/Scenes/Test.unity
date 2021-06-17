@@ -415,6 +415,9 @@ MonoBehaviour:
   resultMiss: {fileID: 21300000, guid: 9ea1ddaa82917b7489645c02af398346, type: 3}
   resultImg: {fileID: 1012158281}
   uiCanvas: {fileID: 631486365}
+  perfectOffsetTime: 0.1
+  goodOffsetTime: 0.14
+  successOffsetTime: 0.17
   scoreConfig:
     reorderableList:
       canAdd: 1
@@ -449,7 +452,7 @@ MonoBehaviour:
       sprite: {fileID: 21300000, guid: ec974d3e571dc8540a6ef03d582a579e, type: 3}
     - score: 0
       sprite: {fileID: 21300000, guid: 9ea1ddaa82917b7489645c02af398346, type: 3}
-  _unitPerSecond: 40
+  _unitPerSecond: 50
   startGame: {fileID: 1335627699}
   restartGame: {fileID: 1048172896}
   leftPerfectFx: {fileID: 620958332}
