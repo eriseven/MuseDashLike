@@ -8,6 +8,9 @@ public class MuseResultEffect : MonoBehaviour
     Transform[] notes;
 
     [SerializeField]
+    private AudioSource audio;
+    
+    [SerializeField]
     new ParticleSystem particleSystem;
 
     void RandownNotes()
@@ -29,10 +32,13 @@ public class MuseResultEffect : MonoBehaviour
     {
         RandownNotes();
         particleSystem.Play();
+        audio.Play();
     }
 
     public void Stop()
     {
         particleSystem.Stop();
+        if (audio.loop)
+            audio.Stop();
     }
 }

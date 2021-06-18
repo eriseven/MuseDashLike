@@ -725,6 +725,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 944166452}
     m_Modifications:
+    - target: {fileID: 432691557221340596, guid: 8b54340cb58444048b67430cbeba2f71,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 5457e2cf05d1a324c989382bcb9c46af, type: 3}
+    - target: {fileID: 432691557221340596, guid: 8b54340cb58444048b67430cbeba2f71,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2781523386081097172, guid: 8b54340cb58444048b67430cbeba2f71,
         type: 3}
       propertyPath: playOnAwake
@@ -956,6 +966,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 944166452}
     m_Modifications:
+    - target: {fileID: 432691557221340596, guid: 8b54340cb58444048b67430cbeba2f71,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 5457e2cf05d1a324c989382bcb9c46af, type: 3}
+    - target: {fileID: 432691557221340596, guid: 8b54340cb58444048b67430cbeba2f71,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2781523386081097172, guid: 8b54340cb58444048b67430cbeba2f71,
         type: 3}
       propertyPath: playOnAwake
@@ -1435,6 +1455,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 944166452}
     m_Modifications:
+    - target: {fileID: 432691557221340596, guid: 8b54340cb58444048b67430cbeba2f71,
+        type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 432691557221340596, guid: 8b54340cb58444048b67430cbeba2f71,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 320a429f905fba649995f8281d162ef2, type: 3}
+    - target: {fileID: 432691557221340596, guid: 8b54340cb58444048b67430cbeba2f71,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2781523386081097172, guid: 8b54340cb58444048b67430cbeba2f71,
         type: 3}
       propertyPath: playOnAwake
@@ -1942,6 +1977,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 944166452}
     m_Modifications:
+    - target: {fileID: 432691557221340596, guid: 8b54340cb58444048b67430cbeba2f71,
+        type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 432691557221340596, guid: 8b54340cb58444048b67430cbeba2f71,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 320a429f905fba649995f8281d162ef2, type: 3}
+    - target: {fileID: 432691557221340596, guid: 8b54340cb58444048b67430cbeba2f71,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2781523386081097172, guid: 8b54340cb58444048b67430cbeba2f71,
         type: 3}
       propertyPath: playOnAwake
