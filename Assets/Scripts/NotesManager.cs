@@ -390,7 +390,7 @@ public class NotesManager : MonoBehaviour
 
         public override InputResult Update()
         {
-            noteObject.GetComponent<LongNoteRenderer>().UpdateState(position
+            noteObject.GetComponent<LongNoteRenderer>().UpdateState(position + new Vector3(2, 0, 0)
                 , length);
 
 
