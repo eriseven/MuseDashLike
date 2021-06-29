@@ -179,14 +179,14 @@ public class NotesManager : MonoBehaviour
 
         public InputResult currentResult => result;
 
-        protected void LogResult()
+        protected virtual void LogResult()
         {
             var msg = ($"Note Result {result.ToString()}: {time}, {NotesManager.instance.time}, {perfectOffsetTime}, {goodOffsetTime}, {successOffsetTime}");
             Debug.Log(msg);
             NotesManager.instance.logText[trackIndex].text = msg;
         }
 
-        protected void LogClickEvent()
+        protected virtual void LogClickEvent()
         {
             var msg =
                 $"Click {result.ToString()}: {time}, {NotesManager.instance.time}, {NotesManager.instance.time - time}, {perfectOffsetTime}, {goodOffsetTime}, {successOffsetTime}";
@@ -331,7 +331,22 @@ public class NotesManager : MonoBehaviour
 
         float pressTime = -1;
         float pressedDuration = 0;
-
+        
+        protected override void LogResult()
+        {
+            var msg =
+                $"Release {result.ToString()}: {time + duration}, {NotesManager.instance.time}, {NotesManager.instance.time - (time + duration)}, {perfectOffsetTime}, {goodOffsetTime}, {successOffsetTime}";
+            Debug.Log(msg);
+            NotesManager.instance.logText[trackIndex].text = msg;
+        }
+        protected override void LogClickEvent()
+        {
+            var msg =
+                $"Press {result.ToString()}: {time}, {NotesManager.instance.time}, {NotesManager.instance.time - time}, {perfectOffsetTime}, {goodOffsetTime}, {successOffsetTime}";
+            Debug.Log(msg);
+            NotesManager.instance.logText[trackIndex].text = msg;
+        }
+        
         public override InputResult OnInput(InputEvent ev)
         {
 
@@ -469,7 +484,7 @@ public class NotesManager : MonoBehaviour
                         }
                         else
                         {
-                            LogResult();
+                            // LogResult();
                         }
                     }
                     else
