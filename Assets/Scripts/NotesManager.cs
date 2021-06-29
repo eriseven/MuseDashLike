@@ -181,6 +181,11 @@ public class NotesManager : MonoBehaviour
             Debug.Log($"Note Result {result.ToString()}: {time}, {NotesManager.instance.time}, {perfectOffsetTime}, {goodOffsetTime}, {successOffsetTime}, {id}");
         }
 
+        protected void LogClickEvent()
+        {
+            Debug.Log($"Click {result.ToString()}: {time}, {NotesManager.instance.time}, {NotesManager.instance.time - time}, {perfectOffsetTime}, {goodOffsetTime}, {successOffsetTime}");
+        }
+
         protected virtual InputResult CheckResult()
         {
             return InputResult.NONE;
@@ -192,7 +197,7 @@ public class NotesManager : MonoBehaviour
             if (xPos + successOffsetTime < 0)
             {
                 result = InputResult.FAILED;
-                LogResult();
+                // LogResult();
             }
 
             return result;
@@ -224,7 +229,8 @@ public class NotesManager : MonoBehaviour
                 if (result != InputResult.NONE && result != InputResult.FAILED && result != InputResult.PENDING)
                 {
                     OnPerfect(result);
-                    LogResult();
+                    // LogResult();
+                    LogClickEvent();
                 }
             }
             return result;
@@ -244,7 +250,7 @@ public class NotesManager : MonoBehaviour
             if (result != InputResult.NONE && result != InputResult.FAILED && result != InputResult.PENDING)
             {
                 OnPerfect(result);
-                LogResult();
+                // LogResult();
             }
         }
 
@@ -287,7 +293,7 @@ public class NotesManager : MonoBehaviour
             {
                 result = InputResult.FAILED;
                 _pendingResult = result;
-                LogResult();
+                // LogResult();
             }
 
             if (_pendingResult != InputResult.NONE && _pendingResult != InputResult.FAILED && _pendingResult != InputResult.PENDING)
@@ -298,7 +304,7 @@ public class NotesManager : MonoBehaviour
                     if (_slaveResult != InputResult.NONE && _slaveResult != InputResult.FAILED && _slaveResult != InputResult.PENDING)
                     {
                         result = (InputResult)Math.Max((int)_pendingResult, (int)_slaveResult);
-                        LogResult();
+                        // LogResult();
                         slaveNote.NotifyFinalResult(result);
                     }
                 }
@@ -333,6 +339,7 @@ public class NotesManager : MonoBehaviour
                         result = InputResult.PENDING;
                         OnPerfect(result);
                         pressTime = NotesManager.instance.time;
+                        LogClickEvent();
                         //Debug.Log($"Note Result PERFECT: {time}, {id}");
                     }
                     else
@@ -366,6 +373,7 @@ public class NotesManager : MonoBehaviour
                 //if (result != InputResult.FAILED)
                 {
                     OnPerfect(result);
+                    LogResult();
                 }
             }
 
@@ -401,7 +409,7 @@ public class NotesManager : MonoBehaviour
                 {
                     result = InputResult.FAILED;
                     OnPerfect(result);
-                    LogResult();
+                    // LogResult();
                 }
             }
             return result;
