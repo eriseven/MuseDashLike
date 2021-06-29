@@ -44,6 +44,8 @@ public class NotesManager : MonoBehaviour
     [SerializeField] Sprite resultPerfect;
     [SerializeField] Sprite resultMiss;
 
+    public TextMeshProUGUI[] logText;
+
     [SerializeField]
     ResultImage resultImg;
 
@@ -87,7 +89,7 @@ public class NotesManager : MonoBehaviour
             int score = setting.score;
             totalScore += score;
 
-            Debug.Log($"Get Score:{score}, Total Score:{totalScore}");
+            // Debug.Log($"Get Score:{score}, Total Score:{totalScore}");
             if (scoreLable != null)
             {
                 scoreLable.text = totalScore.ToString();
@@ -139,6 +141,7 @@ public class NotesManager : MonoBehaviour
         public GameObject noteObject;
         public string id;
         public float time;
+        public int trackIndex = 0;
 
         private float _perfectOffsetTime = 0.5f;
 
@@ -178,12 +181,17 @@ public class NotesManager : MonoBehaviour
 
         protected void LogResult()
         {
-            Debug.Log($"Note Result {result.ToString()}: {time}, {NotesManager.instance.time}, {perfectOffsetTime}, {goodOffsetTime}, {successOffsetTime}, {id}");
+            var msg = ($"Note Result {result.ToString()}: {time}, {NotesManager.instance.time}, {perfectOffsetTime}, {goodOffsetTime}, {successOffsetTime}");
+            Debug.Log(msg);
+            NotesManager.instance.logText[trackIndex].text = msg;
         }
 
         protected void LogClickEvent()
         {
-            Debug.Log($"Click {result.ToString()}: {time}, {NotesManager.instance.time}, {NotesManager.instance.time - time}, {perfectOffsetTime}, {goodOffsetTime}, {successOffsetTime}");
+            var msg =
+                $"Click {result.ToString()}: {time}, {NotesManager.instance.time}, {NotesManager.instance.time - time}, {perfectOffsetTime}, {goodOffsetTime}, {successOffsetTime}";
+            Debug.Log(msg);
+            NotesManager.instance.logText[trackIndex].text = msg;
         }
 
         protected virtual InputResult CheckResult()
@@ -729,7 +737,7 @@ public class NotesManager : MonoBehaviour
         SceneManager.LoadScene("Test");
     }
 
-    Note CreateNoteInstance(object so, Transform track)
+    Note CreateNoteInstance(object so, Transform track, int trackIdx = 0)
     {
         if (so is MuseClickNote)
         {
@@ -742,6 +750,7 @@ public class NotesManager : MonoBehaviour
                 noteObject = note,
                 time = (float)n.time,
                 id = n.guid,
+                trackIndex = trackIdx,
                 //perfectOffsetTime = n.perfectOffsetTime,
                 //goodOffsetTime = n.goodOffsetTime,
                 //successOffsetTime = n.successOffsetTime,
@@ -761,6 +770,7 @@ public class NotesManager : MonoBehaviour
                 noteObject = otherNote,
                 time = (float)n.time,
                 id = $"slave-for{n.guid}",
+                trackIndex = 1,
                 //id = n.guid,
                 //perfectOffsetTime = n.perfectOffsetTime,
                 //goodOffsetTime = n.goodOffsetTime,
@@ -777,6 +787,7 @@ public class NotesManager : MonoBehaviour
                 //goodOffsetTime = n.goodOffsetTime,
                 //successOffsetTime = n.successOffsetTime,
                 slaveNote = slave,
+                trackIndex = 0,
             };
 
         }
@@ -801,6 +812,7 @@ public class NotesManager : MonoBehaviour
                     goodClickCount = n.goodClickCount,
                     successClickCount = n.successClickCount,
                     id = n.guid,
+                    trackIndex = trackIdx,
                 };
             }
             else if (tc.asset is MuseLongClickNote)
@@ -821,6 +833,7 @@ public class NotesManager : MonoBehaviour
                     goodPercent = n.goodPercent,
                     successPercent = n.successPercent,
                     id = n.guid,
+                    trackIndex = trackIdx,
                 };
             }
 
@@ -846,13 +859,13 @@ public class NotesManager : MonoBehaviour
 
         foreach (var m in leftNotes)
         {
-            var note = CreateNoteInstance(m, this.leftTrack);
+            var note = CreateNoteInstance(m, this.leftTrack, 0);
             tempNotesList.Add(note);
         }
 
         foreach (var m in leftNoteClips)
         {
-            var note = CreateNoteInstance(m, this.leftTrack);
+            var note = CreateNoteInstance(m, this.leftTrack, 0);
             tempNotesList.Add(note);
         }
 
@@ -875,13 +888,13 @@ public class NotesManager : MonoBehaviour
 
         foreach (var m in rightNotes)
         {
-            var note = CreateNoteInstance(m, this.rightTrack);
+            var note = CreateNoteInstance(m, this.rightTrack, 1);
             tempNotesList.Add(note);
         }
 
         foreach (var m in rightNoteClips)
         {
-            var note = CreateNoteInstance(m, this.rightTrack);
+            var note = CreateNoteInstance(m, this.rightTrack, 1);
             tempNotesList.Add(note);
         }
 
