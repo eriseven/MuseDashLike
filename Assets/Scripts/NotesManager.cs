@@ -335,14 +335,14 @@ public class NotesManager : MonoBehaviour
         protected override void LogResult()
         {
             var msg =
-                $"Release {result.ToString()}: {time + duration}, {NotesManager.instance.time}, {NotesManager.instance.time - (time + duration)}, {perfectOffsetTime}, {goodOffsetTime}, {successOffsetTime}";
+                $"Release({id}) {result.ToString()}: {time + duration}, {NotesManager.instance.time}, {NotesManager.instance.time - (time + duration)}, {perfectOffsetTime}, {goodOffsetTime}, {successOffsetTime}";
             Debug.Log(msg);
             NotesManager.instance.logText[trackIndex].text = msg;
         }
         protected override void LogClickEvent()
         {
             var msg =
-                $"Press {result.ToString()}: {time}, {NotesManager.instance.time}, {NotesManager.instance.time - time}, {perfectOffsetTime}, {goodOffsetTime}, {successOffsetTime}";
+                $"Press({id}) {result.ToString()}: {time}, {NotesManager.instance.time}, {NotesManager.instance.time - time}, {perfectOffsetTime}, {goodOffsetTime}, {successOffsetTime}";
             Debug.Log(msg);
             NotesManager.instance.logText[trackIndex].text = msg;
         }
@@ -354,10 +354,11 @@ public class NotesManager : MonoBehaviour
             {
                 if (ev == InputEvent.PRESSED)
                 {
-                    if (Mathf.Abs(NotesManager.instance.time - time) > perfectOffsetTime
-                        || Mathf.Abs(NotesManager.instance.time - (time + duration)) > perfectOffsetTime
-                        || (NotesManager.instance.time > time && NotesManager.instance.time < (time + duration)))
+                    // if (Mathf.Abs(NotesManager.instance.time - time) > perfectOffsetTime
+                    //     || Mathf.Abs(NotesManager.instance.time - (time + duration)) > perfectOffsetTime
+                    //     || (NotesManager.instance.time > time && NotesManager.instance.time < (time + duration)))
 
+                    if(NotesManager.instance.time > (time - perfectOffsetTime) && NotesManager.instance.time < (time + duration + perfectOffsetTime))
                     {
                         result = InputResult.PENDING;
                         OnPerfect(result);
@@ -764,7 +765,7 @@ public class NotesManager : MonoBehaviour
             {
                 noteObject = note,
                 time = (float)n.time,
-                id = n.guid,
+                id = n.GetInstanceID().ToString(),
                 trackIndex = trackIdx,
                 //perfectOffsetTime = n.perfectOffsetTime,
                 //goodOffsetTime = n.goodOffsetTime,
@@ -784,7 +785,7 @@ public class NotesManager : MonoBehaviour
             {
                 noteObject = otherNote,
                 time = (float)n.time,
-                id = $"slave-for{n.guid}",
+                id = $"slave-for{n.GetInstanceID()}",
                 trackIndex = 1,
                 //id = n.guid,
                 //perfectOffsetTime = n.perfectOffsetTime,
@@ -797,7 +798,7 @@ public class NotesManager : MonoBehaviour
             {
                 noteObject = note,
                 time = (float)n.time,
-                id = n.guid,
+                id = n.GetInstanceID().ToString(),
                 //perfectOffsetTime = n.perfectOffsetTime,
                 //goodOffsetTime = n.goodOffsetTime,
                 //successOffsetTime = n.successOffsetTime,
@@ -826,7 +827,7 @@ public class NotesManager : MonoBehaviour
                     perfectClickCount = n.perfectClickCount,
                     goodClickCount = n.goodClickCount,
                     successClickCount = n.successClickCount,
-                    id = n.guid,
+                    id = n.GetInstanceID().ToString(),
                     trackIndex = trackIdx,
                 };
             }
@@ -847,7 +848,7 @@ public class NotesManager : MonoBehaviour
                     perfectPercent = n.perfectPercent,
                     goodPercent = n.goodPercent,
                     successPercent = n.successPercent,
-                    id = n.guid,
+                    id = n.GetInstanceID().ToString(),
                     trackIndex = trackIdx,
                 };
             }
