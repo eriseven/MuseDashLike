@@ -15,6 +15,8 @@ public class NotesManager : MonoBehaviour
 {
     public TimelineAsset gameLevel;
 
+    private TimelineAsset[] gameLevels = new TimelineAsset[0];
+
     [SerializeField]
     GameObject clickNotePrefab;
 
@@ -622,10 +624,24 @@ public class NotesManager : MonoBehaviour
 
     IEnumerator Start()
     {
-        Load();
+        gameLevels = Resources.LoadAll<TimelineAsset>("Levels");
+        // Load();
         if (startGame != null)
         {
-            startGame.gameObject.SetActive(true);
+            foreach (var level in gameLevels)
+            {
+                var btn = Instantiate(startGame, startGame.transform.parent);
+
+                btn.GetComponentInChildren<TextMeshProUGUI>().text = level.name;
+                btn.onClick.AddListener(() =>
+                {
+                    gameLevel = level;
+                    Load();
+                    StartIntro();
+                });
+                btn.gameObject.SetActive(true);
+                // startGame.gameObject.SetActive(true);
+            }
         }
         yield return null;
         //StartGame();
@@ -716,7 +732,8 @@ public class NotesManager : MonoBehaviour
     {
         if (startGame != null)
         {
-            startGame.gameObject.SetActive(false);
+            // startGame.gameObject.SetActive(false);
+            startGame.transform.parent.gameObject.SetActive(false);
         }
 
         trackRoot.gameObject.SetActive(true);
@@ -731,7 +748,8 @@ public class NotesManager : MonoBehaviour
 
         if (startGame != null)
         {
-            startGame.gameObject.SetActive(false);
+            // startGame.gameObject.SetActive(false);
+            startGame.transform.parent.gameObject.SetActive(false);
         }
 
         isPlaying = true;
