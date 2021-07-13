@@ -22,6 +22,12 @@ public class LongNoteRenderer : MonoBehaviour
     {
         // var note = GameObject.Instantiate(longClickNotePrefab, track);
         transform.localPosition = position;
+        if (duration > 1)
+        {
+            var mid = (duration * 2) / 10;
+            
+        }
+        
         lineRenderer.transform.localScale = new Vector3(duration, 1, 1);
         noteBegin = Instantiate(notePrefab, transform);
         noteBegin.transform.position = origin.transform.position;
