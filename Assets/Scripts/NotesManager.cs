@@ -139,7 +139,7 @@ public class NotesManager : MonoBehaviour
 
     class Note
     {
-        public Action<InputResult> OnPerfect = delegate { };
+        public Action<InputResult, Note> OnPerfect = delegate { };
         public GameObject noteObject;
         public string id;
         public float time;
@@ -207,6 +207,7 @@ public class NotesManager : MonoBehaviour
             if (xPos + successOffsetTime < 0)
             {
                 result = InputResult.FAILED;
+                OnPerfect(result, this);
                 // LogResult();
             }
 
@@ -237,8 +238,9 @@ public class NotesManager : MonoBehaviour
                 }
 
                 if (result != InputResult.NONE && result != InputResult.FAILED && result != InputResult.PENDING)
+                // if (result != InputResult.NONE && result != InputResult.PENDING)
                 {
-                    OnPerfect(result);
+                    OnPerfect(result, this);
                     // LogResult();
                     LogClickEvent();
                 }
@@ -259,7 +261,7 @@ public class NotesManager : MonoBehaviour
             this.result = result;
             if (result != InputResult.NONE && result != InputResult.FAILED && result != InputResult.PENDING)
             {
-                OnPerfect(result);
+                OnPerfect(result, this);
                 // LogResult();
             }
         }
@@ -363,7 +365,7 @@ public class NotesManager : MonoBehaviour
                     if(NotesManager.instance.time > (time - perfectOffsetTime) && NotesManager.instance.time < (time + duration + perfectOffsetTime))
                     {
                         result = InputResult.PENDING;
-                        OnPerfect(result);
+                        OnPerfect(result, this);
                         pressTime = NotesManager.instance.time;
                         LogClickEvent();
                         //Debug.Log($"Note Result PERFECT: {time}, {id}");
@@ -398,7 +400,7 @@ public class NotesManager : MonoBehaviour
 
                 //if (result != InputResult.FAILED)
                 {
-                    OnPerfect(result);
+                    OnPerfect(result, this);
                     LogResult();
                 }
             }
@@ -434,7 +436,7 @@ public class NotesManager : MonoBehaviour
                 if (NotesManager.instance.time - (time + duration) > perfectOffsetTime)
                 {
                     result = InputResult.FAILED;
-                    OnPerfect(result);
+                    OnPerfect(result, this);
                     // LogResult();
                 }
             }
@@ -480,7 +482,7 @@ public class NotesManager : MonoBehaviour
                             result = InputResult.PENDING;
                         }
 
-                        OnPerfect(result);
+                        OnPerfect(result, this);
                         if (result == InputResult.PENDING)
                         {
                             Debug.Log($"MutiClickNote performed:{clickedCount}, time:{NotesManager.instance.time}");
@@ -538,7 +540,7 @@ public class NotesManager : MonoBehaviour
     class NoteTrack
     {
 
-        public Action<InputResult> OnPerfect;
+        public Action<InputResult, Note> OnPerfect;
 
         Queue<Note> notes = new Queue<Note>();
         public void Update()
@@ -558,7 +560,7 @@ public class NotesManager : MonoBehaviour
                         GameObject.Destroy(note.noteObject);
                         if (result != originResult)
                         {
-                            OnPerfect(result);
+                            OnPerfect(result, note);
                         }
                     }
 
@@ -685,13 +687,17 @@ public class NotesManager : MonoBehaviour
     [SerializeField]
     MuseResultEffect rightPendingFx;
 
+    [SerializeField] MuseResultEffect rightLongFailFx;
+    [SerializeField] MuseResultEffect leftLongFailFx;
+   
+    [SerializeField] MuseResultEffect rightFailFx;
+    [SerializeField] MuseResultEffect leftFailFx;
+ 
 
-
-    void OnLeftPerfect(InputResult result)
+    void OnLeftPerfect(InputResult result, Note note)
     {
         if (result != InputResult.PENDING && result != InputResult.NONE && result != InputResult.FAILED)
         {
-
             leftPendingFx.Stop();
             leftPerfectFx.Play();
         }
@@ -702,12 +708,20 @@ public class NotesManager : MonoBehaviour
         else if (result == InputResult.FAILED)
         {
             leftPendingFx.Stop();
+            if (note is LongClickNote)
+            {
+                leftLongFailFx?.Play();
+            }
+            else
+            {
+                leftLongFailFx?.Play();
+            }
         }
 
         OnPerfect(result);
     }
 
-    void OnRightPerfect(InputResult result)
+    void OnRightPerfect(InputResult result, Note note)
     {
         if (result != InputResult.PENDING && result != InputResult.NONE && result != InputResult.FAILED)
         {
@@ -721,6 +735,14 @@ public class NotesManager : MonoBehaviour
         else if (result == InputResult.FAILED)
         {
             rightPendingFx.Stop();
+            if (note is LongClickNote)
+            {
+                rightLongFailFx?.Play();
+            }
+            else
+            {
+                rightFailFx?.Play();
+            }
         }
 
 

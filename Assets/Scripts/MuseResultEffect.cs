@@ -32,13 +32,13 @@ public class MuseResultEffect : MonoBehaviour
     {
         RandownNotes();
         particleSystem.Play();
-        audio.Play();
+        if (audio != null) { audio.Play(); }
     }
 
     public void Stop()
     {
         particleSystem.Stop();
-        if (audio.loop)
-            audio.Stop();
+        if (audio != null && audio.loop)
+            audio?.Stop();
     }
 }
