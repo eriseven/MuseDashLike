@@ -19,7 +19,10 @@ public class NotesManager : MonoBehaviour
 
     [SerializeField]
     GameObject clickNotePrefab;
-
+    
+    [SerializeField]
+    GameObject doubleClickNotePrefab;
+    
     [SerializeField]
     GameObject multiClickNotePrefab;
 
@@ -639,6 +642,7 @@ public class NotesManager : MonoBehaviour
                 btn.onClick.AddListener(() =>
                 {
                     gameLevel = level;
+                    GetComponent<PlayableDirector>().playableAsset = gameLevel;
                     Load();
                     StartIntro();
                 });
@@ -816,10 +820,10 @@ public class NotesManager : MonoBehaviour
         else if (so is MuseDoubleClickNote)
         {
             MuseDoubleClickNote n = so as MuseDoubleClickNote;
-            var note = GameObject.Instantiate(clickNotePrefab, track);
+            var note = GameObject.Instantiate(doubleClickNotePrefab, track);
             note.transform.localPosition = Vector3.right * (float)n.time * _unitPerSecond;
 
-            var otherNote = GameObject.Instantiate(clickNotePrefab, track);
+            var otherNote = GameObject.Instantiate(doubleClickNotePrefab, track);
             otherNote.transform.localPosition = Vector3.right * (float)n.time * _unitPerSecond;
 
             var slave = new DoubleClickNote()

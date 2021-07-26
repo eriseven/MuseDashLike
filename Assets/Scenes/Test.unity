@@ -541,6 +541,8 @@ MonoBehaviour:
   gameLevel: {fileID: 11400000, guid: cceccf2d28a4c4044bf3fa9fe8443b61, type: 2}
   clickNotePrefab: {fileID: 8024561498541442583, guid: 57f85868071b6c746898fe2d72a9582b,
     type: 3}
+  doubleClickNotePrefab: {fileID: 8024561498541442583, guid: 777fca9eb4eee614ca4b2d666bf9ea32,
+    type: 3}
   multiClickNotePrefab: {fileID: 650900063401986643, guid: a4998d2159bfb66449bd01ffc691df5f,
     type: 3}
   longClickNotePrefab: {fileID: 650900063401986643, guid: 0a585693db52f7b4aa13f0dd3db97f32,
