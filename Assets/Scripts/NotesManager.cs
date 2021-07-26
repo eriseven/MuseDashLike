@@ -554,10 +554,11 @@ public class NotesManager : MonoBehaviour
                 if (result != InputResult.NONE && result != InputResult.PENDING)
                 {
                     notes.Dequeue();
+                    GameObject.Destroy(note.noteObject);
 
                     if (result != InputResult.FAILED && result != InputResult.PENDING)
                     {
-                        GameObject.Destroy(note.noteObject);
+                        // GameObject.Destroy(note.noteObject);
                         if (result != originResult)
                         {
                             OnPerfect(result, note);
@@ -594,7 +595,7 @@ public class NotesManager : MonoBehaviour
                 {
                     notes.Dequeue();
 
-                    if (result != InputResult.FAILED && result != InputResult.PENDING)
+                    // if (result != InputResult.FAILED && result != InputResult.PENDING)
                     {
                         GameObject.Destroy(note.noteObject);
                     }

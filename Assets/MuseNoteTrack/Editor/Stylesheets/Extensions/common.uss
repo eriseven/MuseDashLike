@@ -1,0 +1,13 @@
+﻿MuseClickNote
+{
+    width:16px;
+    height:16px;
+    background-image: resource("Assets/MuseNoteTrack/Editor/blue_tag-one.png");
+}
+
+MuseDoubleClickNote
+{
+    width:16px;
+    height:16px;
+    background-image: resource("Assets/MuseNoteTrack/Editor/red_tag-one.png");
+}

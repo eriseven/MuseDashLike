@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Timeline;
 
+[CustomStyle("MuseClickNote")]
 public class MuseClickNote : MuseNoteMarker
 {
     public float perfectOffsetTime = 0.5f;
