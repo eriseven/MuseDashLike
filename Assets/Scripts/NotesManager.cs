@@ -18,6 +18,9 @@ public class NotesManager : MonoBehaviour
     private TimelineAsset[] gameLevels = new TimelineAsset[0];
 
     [SerializeField]
+    private GameObject character;
+
+    [SerializeField]
     GameObject clickNotePrefab;
     
     [SerializeField]
@@ -761,6 +764,11 @@ public class NotesManager : MonoBehaviour
         {
             // startGame.gameObject.SetActive(false);
             startGame.transform.parent.gameObject.SetActive(false);
+        }
+
+        if (character != null)
+        {
+            character.SetActive(true);
         }
 
         trackRoot.gameObject.SetActive(true);
